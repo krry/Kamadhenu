@@ -1,0 +1,191 @@
+#!/usr/bin/env zsh
+# Kamadhenu
+
+# ___________________________________________________________
+# /  .::::::. ::: :::      :::  .  .-:.     ::-.              \
+# | ;;;`    ` ;;; ;;;      ;;; .;;,.';;.   ;;;;'              |
+# | '[==/[[[[,[[[ [[[      [[[[[/'    '[[,[[['                |
+# |   '''    $$$$ $$'     _$$$$,        c$$"                  |
+# |  88b    dP888o88oo,.__"888"88o,   ,8P"`                   |
+# |   "YMmMY" MMM""""YUMMM MMM "MMP" mM"                      |
+# | .::    .   .::::::::::::::: :::.    :::::::.. :::::::-.   |
+# | ';;,  ;;  ;;;' ;;;'`````;;; ;;`;;   ;;;;``;;;; ;;,   `';, |
+# |  '[[, [[, [['  [[[    .n[[',[[ '[[,  [[[,/[[[' `[[     [[ |
+# |    Y$c$$$c$P   $$$  ,$$P" c$$$cc$$$c $$$$$$c    $$,    $$ |
+# |     "88"888    888,888bo,_ 888   888,888b "88bo,888_,o8P' |
+# \      "M "M"    MMM `""*UMM YMM   ""` MMMM   "W" MMMMP"`   /
+#  -----------------------------------------------------------
+#     \                                       ,:=+++++???++?+=+=
+#      \                               :+?????$MUUUUUUUUUMO+??~
+#       \                         :+I??$UUUUMUMMMMUUMUMUUMUUMM???I+:
+#        \                     ,+??+ZOUUMMUMMMUUUUUMUUUMUUUMUMUUMZI+?+:
+#         \                 ~I?+MMUMUUUMUUUOOUMMMMMMUUUUUMMMUUUUUUMMUM0?~
+#                        I?+7MMMMMUUO7?+?IUMMMMMMMMUUMUUMUUUUUUUUUUMMMUMO?I
+#                     ~I?+MMMUUUO????+?IOUZ7?,.......,+$$OUMUUUUUUMUMUUUMUU+I:
+#                    =??$UMUUU7++??????II???????=.....,?OUUMMMUUMUUUUUUUMMUUU+=
+#                  +??UUMMM7??????+??+?????+??=,...$MUMUUUUMUUMUUUUUUUUMMUM7II??=
+#                ,+?IUMMMI???III?++??+?????+~....... ......MUUMUUUUUUUUUMMU7?~
+#                IIUMMM+?+?IUUUUMUUM7I?????????????I?+=:......MUUMMUMUMMMMUUU+~
+#              :?+UMMU+?+?7UMMUUUZ7$$7????+++????????????=.....+UMUUUUMMMMMMUZ?
+#              ?+UMUM???+MMMMMU?++???????????++????????++????....OMMMUMMMMUMMUI:
+#             +$MMUM?+?ZMMU:$MM???OUUU+??+???+????????????????,...UMUMUUUUMMUMM?~
+#             IUUUU?I?OUUU,..UU?IMMUUMUUI???+?????????????????I,..:UUMUUUUMMUMU?+
+#             ?UUUMUM$UMUU~..UUUUU$,IUUUMM7+?????????????????+?I~..UUUUUUUMMMUU+?
+#             ?OUMUUUUMMUI+.?UUUU=...~UMMUU$?????+???????????????..MUMUUUUUMUMU??
+#            :??IUUMMUMUMMOMUU7........OUUUMMU?I????????????????I..MUMUUUUMUUMU?+
+#          +IIUMUO.IUUUUUUO..............?UMUMUM7??????????????+?..UUMUUUUMUUMU?=
+#        ,IZMMU,.:UU7:..........,UUUMUZ....MUUMMO+???????????????..UUUUUUUUUUU?:
+#        IZUUU:..UUUI=....... IUUUUUMMUZ,.MMUMU0+???????????????.MUUMUUUUMUMUI
+#      ,+IUUM..O=..........$UUMMMUU?~....UMMUUI?????????????????=.UMMUUUUUMMU?+
+#      +?UMU~............OUMMUU~..... .UUMUMM+?????????????????=.UMMUMUMUUMOI=
+#      ?$MU~...    ...:MUMU=~........,UUMMMUI+????????????????+IUMMMUUUUMUU?+
+#      +OMU....   ...?UMU=..:~~,.....MMMUUU+?+????????????????~MMUUUUMUMMU?+~
+#      ?OMU~ .. ...?UMUUUMUMUMUMUMUUUMUUMUI???????????????+?+OUUMUUMMMMUIUUUMO,
+#      ??UMU~.....$MUUUOM???UMMUUUMMMUUMM7?++????????????++OMMMUMUUMMUI??UMIU+~
+#      :?7UUU$...UMMM?I~,  +?MMUUMMMMMMUU?????????????+??$UMMMMUUUMU$?: ,??I?:
+#        ?IMUMUUZMU+?,      =?UMMMMMMMMO??????????????+UMUMMUMUMUU?I~
+#         ?+$MUMUMU??        ?MMMMMMMMU??+???????????IUMMMUUUMUUZ?=
+#           ,+???ZUO?~       +ZUMMUMUMU???++??+???IUMMUMUMMUUO??~
+#                ,,:~=       ,?UMUMUMU???+??+?+?7UMUMUMUMUI??:
+#                             ?UMUMMMM?+??++?ZUUMUMUMUZ++?,
+#                             ?UMMMMMO+???MMUMUMUMUMOII=,
+#                             ?UUUMUUZOMUUMUMMUMM+??=
+#                             ?UMMUMMUUUMUMM$???~
+#                            ,?UMUUMUUU$?+?~:
+#                            :IUUUM?+?I=:
+#                            ????~,
+
+
+# Global variables
+input=
+cows=(`ls $(brew --prefix cowsay)/share/cows/ | grep ".cow"`)
+fonts=(`ls $(brew --prefix figlet)/share/figlet/fonts/ | grep ".flf"`)
+
+# Picks a new font and cow at random
+randomize() {
+  unset cow
+  unset font
+  cow=${cows[$(($RANDOM % ${#cows[*]}))]}     # Any old cow can say
+  font=${fonts[$(($RANDOM % ${#fonts[*]}))]}  # What the font is a figlet?
+  echo "cow: $cow, font: ${font%.*}"
+}
+
+# Initialize a cow and a font
+randomize
+
+# Spits out fortunes based on input
+wheelOfFortune() {
+  randomize
+  if [ -z "$1" ]; then
+    fortune -s | cowsay -f $cow | lolcat
+  else
+    arg="$1"
+    # long enough to allow for most words
+    # http://www.ravi.io/language-word-lengths
+    if [ ${#arg} -le 14 ]; then
+      echo "$arg" | figlet -f "$font" | cowsay -nf "$cow" | lolcat
+    elif [ ${#arg} -le 1024 ]; then
+      echo "$arg" | cowsay -f "$cow" | lolcat
+    fi
+  fi
+}
+
+# I am the gatekeeper. Are you the keymaster?
+# Ask the player for input
+prompt() {
+  input=
+  vared -p "$promptMsg" input
+  spinTheWheel "$input"
+}
+
+# the old samsara
+# birth, accounting, death
+spinTheWheel() {
+  if [ ! $introduced ]; then
+    echo "$introMsg"
+    sleep 3
+    echo "$beginMsg"
+    echo "$errorMsg"
+    sleep 2
+    introduced=true
+    prompt
+  fi
+  if [ -z "$1" ]; then
+    wheelOfFortune
+  else
+    count="$1"
+    # Numbers only jacket
+    if [ -n "$1" ] && [ $count -eq $count ] 2>/dev/null; then
+      while [ "$count" -gt 0 ]
+      do
+        if [ ! $count -eq $1 ]; then
+          echo
+          read -ks "?$continueMsg"
+        fi
+        echo
+        wheelOfFortune
+        let count-=1
+      done
+    else
+      wheelOfFortune "$count"
+    fi
+  fi
+  prompt
+}
+
+# messages and sprites
+introMsg="
+
+                    {}} 
+                    {}} 
+                   {{}{}  
+                   {{}{}  
+                  {{}}{}}
+                  {{}}{}}
+                 &>%&%%?&@     
+                &%%#%$<%#%@    
+               &%@%%%@*%@#%#@    
+              &%%#&%##%%$%%%%@   
+            &&%%#%*%%&%@%%%#%%%@   
+           &%&7%%$%&#%#@%%%$>%%#@  
+         &#%%@%%$&%%%%%%%%&%@%#%*%@  
+        &%%>%?@%%<#%*%#?*%$%%%#?%%%@ 
+      &%*$%%$%7&%%$%>%%%%?%%%<%#%$%%#@   
+    &%%%#%%*%%%%&%*%%#@%&*%%%#@%%%<@%%%@ 
+  &%%%&%%$%%&%@%!&%&%%%&%%%&%#%*%#%&@>*%%%@   
+&%%!*%#+%%&%%!%<@%?&%%%?%%@%%/%#@%%%#%<%@%%%%@
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   Prostrate yourself before the Almighty
+______________________________________________
+$(figlet -f puffy Kamadhenu | cowsay -nf $cow | lolcat)
+
+
+"
+
+beginMsg="
+_.-^-.__._.-..-.__.__._.-^-.__.-.._..-..__.-._
+         Good, now cast your lots.
+_.--._._._.--._..-.-.___.--._.__..__._._._.-..
+^^+~*^^**^*~*^*^*~^*^*^*^*~^*~*^+^+^^^+^^+^^+^
+"
+
+errorMsg="
+_.-^-.__._.-..-.__.__._.-^-.__.-.._..-..__.-._
+^^+~*^^**^*~*^*^*~^*^*^*^*~^*~*^+^+^^^+^^+^^+^
+  You may Ctrl-c yourself out at any time.
+_.--._._._.--._..-.-.___.--._.__..__._._._.-..
+"
+
+promptMsg="
+;,'.,';'.,.:'.'.,'..,;.,'.;.
+What have you come to offer?
++^+=^=+^+=+^+^+^==^+^+^+=+^+
+>> "
+
+continueMsg="
+             Any key to continue.
+_.--._._._.--._..-.-.___.--._.__..__._._._.-..
+"
+
+# gets things going from the command line
+spinTheWheel "$1"

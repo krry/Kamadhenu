@@ -1,0 +1,3 @@
+[submodule "cowsay-files"]
+	path = cowsay-files
+	url = https://github.com/krry/cowsay-files
