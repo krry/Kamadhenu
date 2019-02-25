@@ -1,0 +1,15 @@
+##
+## From the canonical koala collection
+# Luke
+# Skywalker
+# koala
+##
+$the_cow = <<EOC;
+  $thoughts
+   $thoughts          .
+       ___   //
+     {~._.~}//
+      ( Y )K/
+     ()~*~()
+     (_)-(_)
+EOC

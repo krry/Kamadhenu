@@ -1,0 +1,21 @@
+
+## TODO
+- [ ] offer settings mode, a settings.file, and CLI flags
+  - cow face settings
+  - choose default cow
+  - choose default font
+  - monochrome mode - no lolcat
+  - no cowsay mode
+  - no fortune mode
+- [ ] gracefully degrade if dependencies not present
+- [ ] add cowsay and figlet fonts to the repo (ideally as submodules)
+  - [ ] categorize figlet fonts into non-readable, favored, others
+  - [ ] categorize cowsays into mono, color, and large
+- [ ] moar easter eggs - make yourself at home
+- add more serendipitous transformations on user input
+- interactive mode
+  - editable cowsay bubble
+  - allow live typing in figlet?
+- programmatically generate the temple in Vimscript
+- expand coloration beyond lolcat
+- expand compatibility to various Linux distros, accept pull requests

@@ -1,0 +1,12 @@
+##
+## Darth Vader Koala
+##
+$the_cow = <<EOC;
+   $thoughts
+    $thoughts        .
+     .---.  //
+    Y|o o|Y//
+   /_(i=i)K/
+   ~()~*~()~
+    (_)-(_)
+EOC

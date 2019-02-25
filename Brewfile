@@ -1,0 +1,6 @@
+tap 'homebrew/bundle'
+brew 'coreutils'
+brew 'figlet'
+brew 'cowsay'
+brew 'lolcat'
+brew 'fortune'

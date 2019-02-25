@@ -1,0 +1,12 @@
+##
+## Do we need to explain this?
+## Elephant inside ASCII snake
+$the_cow = <<EOC;
+   $thoughts
+    $thoughts              ....       
+           ........    .      
+          .            .      
+         .             .      
+.........              .......
+..............................
+EOC
