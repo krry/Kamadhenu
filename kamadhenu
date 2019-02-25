@@ -3,17 +3,13 @@
 # an udderly absurd soothsayer in your shell
 
 # figure out where Kamadhenu sits
-# finds the executable from its symlink
+# find the executable from its symlink
 KMDIR="$(dirname "$(readlink "$0")")"
-echo "found the KMDIR at $KMDIR"
-export COWPATH=$KMDIR/cows
-# figlet -d $KMDIR/figlets
 
 # Pick a new font and cow at random
 randomize() {
     unset COW
     unset FONT
-    echo 'picking randos'
     COW=$(ls $KMDIR/cows | shuf -n 1)
     FONT=$(ls $KMDIR/figlets | shuf -n 1)
     printf "%s\n" "cow: $COW" "font: $FONT"
@@ -23,19 +19,18 @@ randomize() {
 wheelOfFortune() {
     randomize
     if [ -z "$1" ]; then
-        echo 'nothing was requested so offer and leave'
         fortune -s | cowsay -f $COW | lolcat
         exit 0
     else
         arg="$1"
-        # echo long enough to allow for most words
+        # long enough to allow for most words
         # http://www.ravi.io/language-word-lengths
         if [ ${#arg} -le 14 ]; then
-            echo 'print short requests as figlet'
+            # print short requests as figlet
             figlet -f "$FONT" $arg | cowsay -nf "$COW" | lolcat -a
         else
         # elif [ ${#arg} -le 1024 ]; then
-            echo 'requests long enough to break the screen are refused'
+            # requests long enough to break the screen are refused
             cut -c -1024 $arg | cowsay -f "$COW" | lolcat -a
         fi
     fi
@@ -46,7 +41,6 @@ wheelOfFortune() {
 # Ask the player for input
 prompt() {
     unset INPUT
-    echo 'prompting'
     vared -chp "$PROMPTMSG" INPUT
     parseLots "$INPUT"
 }
@@ -60,10 +54,10 @@ prompt() {
 
 parseLots() {
     if [ -z "$1" ]; then
-        echo 'if nothing is requested, give free advice'
+        # if nothing is requested, give free advice
         wheelOfFortune
     elif [ ! $introduced ]; then
-        echo 'we havent been properly introduced'
+        # we havent been properly introduced
         introMsg
         figlet -f ogre 'Kamadhenu' | cowsay -nf 'fox' | lolcat -a
         sleep 3
@@ -75,7 +69,6 @@ parseLots() {
         prompt
     else
         req="$1"
-        echo "we see you have a request: $req"
         # Numbers only jacket
         if [ -n "$1" ] && [ $req -eq $req ] 2>/dev/null; then
             while [ "$req" -gt 0 ]
