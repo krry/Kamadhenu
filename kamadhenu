@@ -7,7 +7,7 @@
 KMDIR="$(dirname "$(readlink "$0")")"
 echo "found the KMDIR at $KMDIR"
 export COWPATH=$KMDIR/cows
-figlet -d $KMDIR/figlets
+# figlet -d $KMDIR/figlets
 
 # Pick a new font and cow at random
 randomize() {
