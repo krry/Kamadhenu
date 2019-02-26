@@ -9,9 +9,11 @@ if type brew > /dev/null 2>&1; then
     fi
     echo "Herding cowsays and wrangling figlets..."
     cp -n $PWD/cows/*.cow $HOMEBREW_PREFIX/share/cows/
-    cp -n $PWD/figlets/*.flf $HOMEBREW_PREFIX/share/figlet/fonts
+    cp -n $PWD/figlet/fonts/*.flf $HOMEBREW_PREFIX/share/figlet/fonts
 fi
 
 (echo "You may now consult Kamadhenu\n"; echo "Just type kamadhenu") | cowsay -s
-figlet -f cola "Kamadhenu" | lolcat -a
+sleep 2
+figlet -f basic "Kamadhenu" | lolcat -a
+sleep 1
 kamadhenu

@@ -5,35 +5,47 @@
 # figure out where Kamadhenu sits
 # find the executable from its symlink
 KMDIR="$(dirname "$(readlink "$0")")"
-
+introduced=
 # Pick a new font and cow at random
 randomize() {
     unset COW
-    unset FONT
     COW=$(ls $KMDIR/cows | shuf -n 1)
-    FONT=$(ls $KMDIR/figlets | shuf -n 1)
-    printf "%s\n" "cow: $COW" "font: $FONT"
+    unset FONT
+    FONT=$(ls $KMDIR/figlet/fonts | shuf -n 1)
 }
 
 # Spit out fortunes based on input arg
-wheelOfFortune() {
+printFortune() {
     randomize
-    if [ -z "$1" ]; then
+    if [ -z $1 ]; then
         fortune -s | cowsay -f $COW | lolcat
         exit 0
+    elif [ ! $introduced ] ; then
+        # we havent been properly introduced
+        introduced=true
+        figlet -f cybermedium 'Kamadhenu' | lolcat -a
+        sleep 1
+        introMsg | lolcat
+        sleep 1
+        errorMsg | lolcat
+        sleep 1
+        beginMsg | lolcat
+        sleep 1
+        printFortune $1
     else
         arg="$1"
         # long enough to allow for most words
         # http://www.ravi.io/language-word-lengths
         if [ ${#arg} -le 14 ]; then
             # print short requests as figlet
-            figlet -f "$FONT" $arg | cowsay -nf "$COW" | lolcat -a
+            figlet -w $COLUMNS -f $FONT $arg | cowsay -nf $COW | lolcat
         else
         # elif [ ${#arg} -le 1024 ]; then
             # requests long enough to break the screen are refused
-            cut -c -1024 $arg | cowsay -f "$COW" | lolcat -a
+            echo $arg | cut -c -1024 | cowsay -f $COW | lolcat
         fi
     fi
+    prompt
 }
 
 # I am the gatekeeper. Are you the keymaster?
@@ -42,7 +54,7 @@ wheelOfFortune() {
 prompt() {
     unset INPUT
     vared -chp "$PROMPTMSG" INPUT
-    parseLots "$INPUT"
+    printFortune $INPUT
 }
 
 # cast your lots, see what dreams may come
@@ -51,40 +63,6 @@ prompt() {
 # - if a number < 10, queue up random fortunes
 # - if flags or options, set them
 # - if a string, send to (fig/toi)let
-
-parseLots() {
-    if [ -z "$1" ]; then
-        # if nothing is requested, give free advice
-        wheelOfFortune
-    elif [ ! $introduced ]; then
-        # we havent been properly introduced
-        introMsg
-        figlet -f ogre 'Kamadhenu' | cowsay -nf 'fox' | lolcat -a
-        sleep 3
-        beginMsg
-        sleep 2
-        errorMsg
-        sleep 2
-        introduced=true
-        prompt
-    else
-        req="$1"
-        # Numbers only jacket
-        if [ -n "$1" ] && [ $req -eq $req ] 2>/dev/null; then
-            while [ "$req" -gt 0 ]
-            do
-                if [ ! $req -eq $1 ]; then
-                    read -ks "?$CONTINUEMSG"
-                fi
-                wheelOfFortune
-                let req-=1
-            done
-        else
-            wheelOfFortune "$req"
-        fi
-    fi
-    prompt
-}
 
 # messages and sprites
 introMsg() {
@@ -101,49 +79,39 @@ introMsg() {
 &&&!*&#+&&&&&!&<@&?&&&&?&&@&&/&#@&&&#&<&@&&&&@
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
    Prostrate yourself before the Almighty
-______________________________________________
 EOF
 }
 
 beginMsg() {
     cat << EOF
-
-
-_.-^-.__._.-..-.__.__._.-^-.__.-.._..-..__.-._
-         Good, now cast your lots.
+          Now, let's cast your lots.
 _.--._._._.--._..-.-.___.--._.__..__._._._.-..
 ^^+~*^^**^*~*^*^*~^*^*^*^*~^*~*^+^+^^^+^^+^^+^
-
-
 EOF
 }
 
 errorMsg() {
     cat << EOF
-
-
 _.-^-.__._.-..-.__.__._.-^-.__.-.._..-..__.-._
 ^^+~*^^**^*~*^*^*~^*^*^*^*~^*~*^+^+^^^+^^+^^+^
-  You may Ctrl-c yourself out at any time.
+   You may Ctrl-c yourself out at any time.
 _.--._._._.--._..-.-.___.--._.__..__._._._.-..
-
-
 EOF
 }
 
 PROMPTMSG="
-
-+^+=^=+^+=+^+^+^==^+^+^+=+^+
-What have you come to offer?
-;,:.,:;,.,.:;.,.;:..,;.,:.;.
+_.-^-.__._.-..-.__.__._.-^-.__.-.._..-..__.-._
++^+=^=+^+=+^+^+^==^+^+^+=+^+=^+^+=^=+^+=+^+^+^
+       What have you? Numbers? Words?
+;,:.,:;,.,.:;.,.;:..,;.,:.;..;.,.;:..,;.,:.;..
 >> "
 
 CONTINUEMSG="
 ' .  '' . '\".  ' \" '. '   \" . '  . '. \" '.  '
 Any key to continue.
 _.--._._._.--._..-.-.___.--._.__..__._._._.-..
-
 "
 
-# Accept arguments when called upon
-parseLots "$1"
+# MAIN
+printFortune $1
+
