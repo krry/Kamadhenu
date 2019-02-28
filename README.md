@@ -10,15 +10,34 @@ git clone https://github.com/krry/kamadhenu.git
 cd kamadhenu && . ./install.sh
 ```
 
-### Bless every terminal
-Begin each shell sesh with Kamadhenu.
-```echo kamadhenu >> .$(basename $SHELL)rc```
+## Usage
+
+Get random insight.
+``` sh
+kamadhenu
+```
+
+Put words in Kamadhenu's mouth?
+``` sh
+kamadhenu I love cheese
+```
+
+Pipe STDOUT to Kamadhenu like a cat
+``` sh
+curl https://raw.githubusercontent.com/krry/kamadhenu/master/kamadhenu |
+kamadhenu
+```
+
+Bless yr terminal. Begin each shell sesh with Kamadhenu.
+``` sh
+echo kamadhenu >> .$(basename $SHELL)rc
+```
 
 ## Dependencies
 - [fortune](https://github.com/bmc/fortunes/)
 - [cowsay](https://linux.die.net/man/1/cowsay)
 - [lolcat](https://github.com/busyloop/lolcat)
-- [cowsay-files](https://github.com/krry/cowsay-files)
+- [figlet](http://www.figlet.org/)
 
 I believe each `cowsay`, `fortune`, `figlet`, and `lolcat` are available for install via `brew`, `pip`, `snap`, and `apt-get`, and various other *nix pacmen. You can do eet.
 

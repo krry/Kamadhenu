@@ -17,8 +17,9 @@ randomize() {
 # Spit out fortunes based on input arg
 printFortune() {
     randomize
-    if [ -z $1 ]; then
-        fortune -s | cowsay -f $COW | lolcat
+    [[ $COLUMNS -le 75 ]] && WIDTH=$(expr $COLUMNS - 3) || WIDTH=75
+    if [ -z $1 ] ; then
+        fortune -sn 320 | cowsay -W $WIDTH -f $COW | lolcat
         exit 0
     elif [ ! $introduced ] ; then
         # we havent been properly introduced
@@ -33,7 +34,7 @@ printFortune() {
         sleep 1
         printFortune $1
     else
-        arg="$1"
+        [ -z $1 ] && arg=$pipedin || arg="$1"
         # long enough to allow for most words
         # http://www.ravi.io/language-word-lengths
         if [ ${#arg} -le 14 ]; then
@@ -114,4 +115,3 @@ _.--._._._.--._..-.-.___.--._.__..__._._._.-..
 
 # MAIN
 printFortune $1
-
