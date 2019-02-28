@@ -1,19 +1,18 @@
 
 # KAMADHENU
 
-An udderly absurd soothsayer for your zshell.
+An udderly absurd soothsayer for your shell.
 
 ## Installation
 
 ``` sh
-brew install fortune cowsay lolcat
 git clone https://github.com/krry/kamadhenu.git
 cd kamadhenu && . ./install.sh
 ```
 
 ### Bless every terminal
-Source the kamadhenu in your zshell loader
-`echo kamadhenu >> .zshrc`
+Begin each shell sesh with Kamadhenu.
+```echo kamadhenu >> .$(basename $SHELL)rc```
 
 ## Dependencies
 - [fortune](https://github.com/bmc/fortunes/)
