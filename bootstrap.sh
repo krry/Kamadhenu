@@ -11,10 +11,10 @@ else
 fi
 
 sudo git clone https://github.com/krry/kamadhenu/ "$BREWFIX/kamadhenu" || \
-printf "Cloning the git repository has gone awry." && exit 1
+(printf "Cloning the git repository has gone awry." && exit 1)
 
-cd "$BREWFIX/kamadhenu" || printf "Oops, flubbed the dismount.\nFind \
-'kamadhenu' in %s and type 'brew bundle' to continue.\n" "$BREWFIX" && exit 1
+cd "$BREWFIX/kamadhenu" || (printf "Oops, flubbed the dismount.\nFind \
+'kamadhenu' in %s and type 'brew bundle' to continue.\n" "$BREWFIX" && exit 1)
 
 printf "%s\n" "Building Kamadhenu's temple"
 
