@@ -1,40 +1,129 @@
 #!/usr/bin/env bash
-printf "Testing for homebrew...\n"
+
+# Toolset
+rulem ()  {
+  printf -v _hr "%*s" "$(tput cols)" && echo -en "${_hr// /${2-$}}" && echo -e "\r\033[20C $1 "
+}
+
+message () {
+  printf "\r  [ \033[00;34m(:\033[0m ] %s\n" "$1"
+}
+
+success () {
+    printf "\r\033[2K  [ \033[00;32mOK\033[0m ] %s\n" "$1"
+}
+
+warning () {
+  printf "\r  [ \033[00;33mUH\033[0m ] %s\n" "$1"
+  WARNED=true
+}
+
+failure () {
+  printf "\r\033[2K  [\033[0;31mNO\033[0m] %s\n" "$1"
+  exit
+}
+
+# Checking for Homebrew
+echo ''
 if type brew > /dev/null 2>&1; then
-    printf "Homebrew found. Commencing installation...\n"
-    BREWFIX="$(brew --prefix)"
-    printf "You may have to sudo now.\n"
+    message "Homebrew found. Commencing installation..."
+    message "Cloning the Kamadhenu repository..."
 else
-    printf "Sorry, you'll need Homebrew for Kamadhenu to install itself.\n"
-    printf "See the REAMDE.md for manual installation instructions.\n"
+    printf "Sorry, you'll need Homebrew for Kamadhenu to install itself."
+    printf "See the REAMDE.md for manual installation instructions."
     exit 2
 fi
+echo ''
 
-git clone https://github.com/krry/Kamadhenu.git || \
-(printf "Cloning the git repository has gone awry." && exit 1)
+# CONSTANTS
+BREWFIX="$(brew --prefix)"
+COW_DIR=${BREWFIX}/share/cows/
+FIGLET_DIR=${BREWFIX}/share/figlet/fonts
+FORTUNE_DIR=${BREWFIX}/share/games/fortunes
 
-cd "./Kamadhenu" || (printf "Oops, flubbed the dismount.\nFind \
-'Kamadhenu' in %s and type 'brew bundle' to continue.\n" "$PWD" && exit 1)
-
-printf "%s\n" "Building Kamadhenu's temple"
-
-if type brew > /dev/null 2>&1; then
-    brew update
-    brew bundle
-    if [ ! -e /usr/local/bin/Kamadhenu ] > /dev/null 2>&1 ; then
-        printf "Symlinking Kamadhenu into %s/bin\n" "$BREWFIX"
-        ln -s "$PWD/Kamadhenu" "$BREWFIX/bin/"
+# Cloning
+if git clone https://github.com/krry/Kamadhenu.git && echo ''; then
+    success "Repository cloned into $PWD"
+    if cd "./Kamadhenu" ; then
+        message "Building Kamadhenu's temple..."
+        message "Updating brew and unbundling brewfile..."
+    else
+        failure "Oops, flubbed the dismount. Couldn't find the cloned files."
+        failure "Find 'Kamadhenu' in $PWD and type 'brew bundle' to continue."
+        exit 1
     fi
-    printf "Herding cowsays..."
-    cp -n ${PWD}/cows/*.cow ${BREWFIX}/share/cows/
-    printf "Wrangling figlets..."
-    cp -n ${PWD}/figlet/fonts/*.flf ${BREWFIX}/share/figlet/fonts
-    printf "Stuffing fortune cookies..."
-    cp -n ${PWD}/fortunes/* ${BREWFIX}/share/games/fortunes
+else
+    echo ''
+    failure "Cloning the git repository has gone awry."
+    exit 1
 fi
-printf "%s\n" "GREAT SUCCESS!"
-printf "%s\n" "You may now call upon Kamadhenu, like so..." | cowsay -f fox | lolcat
-sleep 3
-figlet -f computer "Kamadhenu" | lolcat -a
-sleep 3
-Kamadhenu
+echo ''
+
+# Brewing
+if brew update && brew bundle && echo ''; then
+    success "Brewed and ready."
+else
+    warning "There was a problem with the brew."
+    warning "Check the REAMDE for what to do."
+fi
+echo ''
+
+# Symlinking
+if [ ! -e /usr/local/bin/Kamadhenu ] > /dev/null 2>&1 ; then
+    message "Symlinking Kamadhenu into $BREWFIX/bin"
+    echo ''
+    if ln -s "$PWD/Kamadhenu" "$BREWFIX/bin/" ; then
+        success "Kamadhenu symlinked"
+    else
+        warning "Failed to symlink. See the REAMDE for help."
+        warning "Check the REAMDE for instructions."
+    fi
+fi
+echo ''
+
+# Copying Data
+rulem "Herding cowsays..."
+if cp -n "${PWD}/cows/"*.cow "$COW_DIR" ; then
+    success "Cowsays herded into $COW_DIR"
+else
+    warning "Couldn't copy cows into $COW_DIR"
+    warning "Check the REAMDE for instructions."
+fi
+echo ''
+rulem "Wrangling figlets..."
+if cp -n "${PWD}/figlet/fonts/"*.flf "$FIGLET_DIR" ; then
+    success "Figlets wrangled into $FIGLET_DIR"
+else
+    warning "Couldn't copy FIGlet fonts into $FIGLET_DIR"
+    warning "Check the REAMDE for instructions."
+fi
+echo ''
+rulem "Stuffing fortune cookies..."
+if cp -n "${PWD}/fortunes/"* "$FORTUNE_DIR" ; then
+    success "Fortunes stuffed into $FORTUNE_DIR"
+else
+    warning "Couldn't copy Fortunes into $FORTUNE_DIR"
+    warning "Check the REAMDE for instructions."
+fi
+echo ''
+if [ $WARNED ]; then
+    warning "Check the warnings above to fix the flubs."
+else
+    success "Installation complete."
+    echo ''
+    rulem "GREAT SUCCESS!"
+    sleep 2
+    echo ''
+    echo ''
+    printf "You may now call upon Kamadhenu, like so..." | cowsay -f fox | lolcat
+    echo ''
+    echo ''
+    sleep 3
+    echo ''
+    echo ''
+    figlet -f computer "Kamadhenu" | lolcat -a
+    echo ''
+    echo ''
+    sleep 3
+    Kamadhenu
+fi

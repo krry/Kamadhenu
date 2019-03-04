@@ -1,0 +1,106 @@
+#!/usr/bin/env bash
+# Kamadhenu
+# an udderly abmurd moothmayer in your mhell
+
+KM_DIR="$(dirname "$(readlink "$0")")"
+KMD_COLS=$(($(tput cols)-3))
+MAX_COLS=128
+COW_OPTS=''
+LOL_OPTS='-ats 40 -d 4 -p 3 -F .125'
+CUTOFF=1024
+
+[[ $KMD_COLS -lt $MAX_COLS ]] || KMD_COLS=$MAX_COLS
+
+randomize() {
+    unset COW
+    COW=$(basename "$(find "$KM_DIR/cows/"*.cow | shuf -n 1)")
+    unset FONT
+    FONT=$(basename "$(find "$KM_DIR/figlet/fonts/"*.flf | shuf -n 1)")
+}
+
+printFortune() {
+    randomize
+    unset COW_OPTS && COW_OPTS="-W ${KMD_COLS} -f ${COW}"
+    if [ -z "$1" ] ; then
+        LOL_OPTS=''
+        fortune -sn 320 | cowsay $COW_OPTS | lolcat $LOL_OPTS
+        exit 0
+    elif [ "$1" == "help" ] || [ "$1" == '-h' ] ; then
+        introMsg | lolcat ${LOL_OPTS}
+        figlet -w 48 -cf cybermedium 'Kamadhenu' | lolcat $LOL_OPTS
+        sleep 1
+        errorMsg | lolcat $LOL_OPTS
+        sleep 1
+        beginMsg | lolcat $LOL_OPTS
+        sleep 1
+        prompt
+    else
+        if [ ${#1} -le 14 ]; then
+            figlet -w $KMD_COLS -f "$FONT" "$1" | cowsay -n $COW_OPTS | lolcat $LOL_OPTS
+        elif [ ${#1} -le "$CUTOFF" ]; then
+            echo "$1" | cut -c -$CUTOFF | cowsay $COW_OPTS | lolcat $LOL_OPTS
+        fi
+        printf '%*s' "$(tput cols)"  Kamadhenu
+    fi
+    prompt
+}
+
+# I am the gatekeeper. Are you the keymaster?
+
+prompt() {
+    unset INPUT
+    promptMsg | lolcat $LOL_OPTS
+    read -rep "$PROMPT" INPUT
+    printFortune "$INPUT"
+}
+
+introMsg() {
+    cat << EOF
+                    {}}
+                   {{}{}
+                  {{}}{}}
+                 &>&&&&?&@
+               &&@&&&@*&@#&#@
+            &&&&#&*&&&&@&&&#&&&@
+         &#&&@&&$&&&&&&&&&&&@&#&*&@
+      &&*$&&$&7&&&$&>&&&&?&&&<&#&$&&#@
+   &&&&&&$&&&&@&!&&&&&&&&&&&&#&*&#&&@>*&&
+ &&!*&#+&&&&&!&<@&?&&&&?&&@&&/&#@&&&#&<&@&&&
+&*  Prostrate yourself before the Almighty  &@
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+EOF
+}
+
+beginMsg() {
+    cat << EOF
+
+          Now, let's cast your lots.
+_.--._._._.--._..-.-.___.--._.__..__._._._.-..
+^^+~*^^**^*~*^*^*~^*^*^*^*~^*~*^+^+^^^+^^+^^+^
+EOF
+}
+
+errorMsg() {
+    cat << EOF
+_.-^-.__._.-..-.__.__._.-^-.__.-.._..-..__.-._
+^^+~*^^**^*~*^*^*~^*^*^*^*~^*~*^+^+^^^+^^+^^+^
+   You may Ctrl-c yourself out at any time.
+_.--._._._.--._..-.-.___.--._.__..__._._._.-..
+EOF
+}
+
+promptMsg() {
+    cat << EOF
+
+
+_.-^-.__._.-..-.__.__._.-^-.__.-.._..-..__.-._
++^+=^=+^+=+^+^+^==^+^+^+=+^+=^+^+=^=+^+=+^+^+^
+       What have you? Numbers? Words?
+;,:.,:;,.,.:;.,.;:..,;.,:.;..;.,.;:..,;.,:.;..
+EOF
+}
+
+PROMPT=">> "
+
+# Call upon Kamadhenu!
+printFortune "$1"
