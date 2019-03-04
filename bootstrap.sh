@@ -10,7 +10,7 @@ else
     exit 2
 fi
 
-sudo git clone https://github.com/krry/Kamadhenu.git || \
+git clone https://github.com/krry/Kamadhenu.git || \
 (printf "Cloning the git repository has gone awry." && exit 1)
 
 cd "./Kamadhenu" || (printf "Oops, flubbed the dismount.\nFind \
@@ -26,14 +26,11 @@ if type brew > /dev/null 2>&1; then
         ln -s "$PWD/Kamadhenu" "$BREWFIX/bin/"
     fi
     printf "Herding cowsays..."
-    printf "%s\n" "$PWD/cows/*.cow to $BREWFIX/share/cows/"
-    cp -n "$PWD/cows/*.cow" "$BREWFIX/share/cows/"
+    cp -n ${PWD}/cows/*.cow ${BREWFIX}/share/cows/
     printf "Wrangling figlets..."
-    printf "%s\n" "$PWD/figlet/fonts/*.flf to $BREWFIX/share/figlet/fonts"
-    cp -n "$PWD/figlet/fonts/*.flf" "$BREWFIX/share/figlet/fonts"
+    cp -n ${PWD}/figlet/fonts/*.flf ${BREWFIX}/share/figlet/fonts
     printf "Stuffing fortune cookies..."
-    printf "%s\n" "$PWD/fortunes/* to $BREWFIX/share/games/fortunes"
-    cp -n "$PWD/fortunes/*" "$BREWFIX/share/games/fortunes"
+    cp -n ${PWD}/fortunes/* ${BREWFIX}/share/games/fortunes
 fi
 printf "%s\n" "GREAT SUCCESS!"
 printf "%s\n" "You may now call upon Kamadhenu, like so..." | cowsay -f fox | lolcat
