@@ -67,8 +67,8 @@ echo ''
 if brew update && brew bundle && echo ''; then
     success "Brewed and ready."
 else
-    warning "There was a problem with the brew."
-    warning "Check the REAMDE for what to do."
+    warning "There was an issue with the brew."
+    warning "The REAMDE might have tips."
 fi
 echo ''
 
