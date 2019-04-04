@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
 # Toolset
-rulem ()  {
-  printf -v _hr "%*s" "$(tput cols)" && echo -en "${_hr// /${2-$}}" && echo -e "\r\033[20C $1 "
+hr_msg ()  {
+    printf -v _hr "%*s" "$(tput cols)" ""
+    echo -en "${_hr// /${2--}}"
+    echo -e "\r\033[$((($(tput cols)-${#1}-2)/2))C ${1-hi} "
 }
 
 message () {
@@ -32,6 +34,8 @@ else
     printf "Sorry, you'll need Homebrew for Kamadhenu to install itself."
     printf "See the REAMDE.md for manual installation instructions."
     exit 2
+
+
 fi
 echo ''
 
@@ -82,7 +86,7 @@ fi
 echo ''
 
 # Copying Data
-rulem "Herding cowsays..."
+hr_msg "Herding cowsays" "(oo) "
 if cp -n "${PWD}/cows/"*.cow "$COW_DIR" ; then
     success "Cowsays herded into $COW_DIR"
 else
@@ -90,7 +94,7 @@ else
     warning "Check the REAMDE for instructions."
 fi
 echo ''
-rulem "Wrangling figlets..."
+hr_msg "Wrangling figlets" "<..> "
 if cp -n "${PWD}/figlet/fonts/"*.flf "$FIGLET_DIR" ; then
     success "Figlets wrangled into $FIGLET_DIR"
 else
@@ -98,7 +102,7 @@ else
     warning "Check the REAMDE for instructions."
 fi
 echo ''
-rulem "Stuffing fortune cookies..."
+hr_msg "Stuffing fortune cookies" "\$\$ "
 if cp -n "${PWD}/fortunes/"* "$FORTUNE_DIR" ; then
     success "Fortunes stuffed into $FORTUNE_DIR"
 else
@@ -111,7 +115,7 @@ if [ $WARNED ]; then
 else
     success "Installation complete."
     echo ''
-    rulem "GREAT SUCCESS!"
+    hr_msg "GREAT SUCCESS!" "$"
     sleep 2
     echo ''
     echo ''
