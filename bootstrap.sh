@@ -68,20 +68,19 @@ if brew update && brew bundle && echo ''; then
     success "Brewed and ready."
 else
     warning "There was an issue with the brew."
-    warning "The REAMDE might have tips."
 fi
 echo ''
 
 # Symlinking
-if [ ! -e /usr/local/bin/Kamadhenu ] > /dev/null 2>&1 ; then
-    message "Symlinking Kamadhenu into $BREWFIX/bin"
-    echo ''
-    if ln -s "$PWD/Kamadhenu" "$BREWFIX/bin/" ; then
-        success "Kamadhenu symlinked"
-    else
-        warning "Failed to symlink. See the REAMDE for help."
-        warning "Check the REAMDE for instructions."
-    fi
+if [ -L /usr/local/bin/Kamadhenu ] > /dev/null 2>&1 ; then
+    rm /usr/local/bin/Kamadhenu;
+fi
+message "Symlinking Kamadhenu into $BREWFIX/bin"
+echo ''
+if ln -s "$PWD/Kamadhenu" "$BREWFIX/bin/" ; then
+    success "Kamadhenu symlinked"
+else
+    warning "Failed to symlink. You'll want to see to that."
 fi
 echo ''
 
@@ -91,7 +90,6 @@ if cp -n "${PWD}/cows/"*.cow "$COW_DIR" ; then
     success "Cowsays herded into $COW_DIR"
 else
     warning "Couldn't copy cows into $COW_DIR"
-    warning "Check the REAMDE for instructions."
 fi
 echo ''
 hr_msg "Wrangling figlets" "<..> "
@@ -99,7 +97,6 @@ if cp -n "${PWD}/figlet/fonts/"*.flf "$FIGLET_DIR" ; then
     success "Figlets wrangled into $FIGLET_DIR"
 else
     warning "Couldn't copy FIGlet fonts into $FIGLET_DIR"
-    warning "Check the REAMDE for instructions."
 fi
 echo ''
 hr_msg "Stuffing fortune cookies" "\$\$ "
@@ -107,7 +104,6 @@ if cp -n "${PWD}/fortunes/"* "$FORTUNE_DIR" ; then
     success "Fortunes stuffed into $FORTUNE_DIR"
 else
     warning "Couldn't copy Fortunes into $FORTUNE_DIR"
-    warning "Check the REAMDE for instructions."
 fi
 echo ''
 if [ $WARNED ]; then
