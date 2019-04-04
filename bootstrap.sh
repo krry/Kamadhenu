@@ -46,7 +46,7 @@ FIGLET_DIR=${BREWFIX}/share/figlet/fonts
 FORTUNE_DIR=${BREWFIX}/share/games/fortunes
 
 # Cloning
-if git clone https://github.com/krry/Kamadhenu.git && echo ''; then
+if git clone --quiet https://github.com/krry/Kamadhenu.git && echo ''; then
     success "Repository cloned into $PWD"
     if cd "./Kamadhenu" ; then
         message "Building Kamadhenu's temple..."
