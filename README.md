@@ -3,7 +3,7 @@
 
 An udderly absurd soothsayer for your shell.
 
-![The truth shall be our doom](./img/Nietzsche-cow.png)
+![Vaporware](./img/kama-ghost.png)
 
 ## Installation
 
