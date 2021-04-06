@@ -1,5 +1,6 @@
+# TODO
 
-## TODO
+- [ ] why does installation on a new mac yield warnings about failure to copy all the figlets, cows, and fortunes?
 - [ ] offer settings mode, a settings.file, and CLI flags
   - cow face settings
   - choose default cow
