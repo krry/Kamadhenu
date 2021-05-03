@@ -13,8 +13,8 @@ end
 echo ''
 
 # CONSTANTS
-set BREWFIX "(brew --prefix)"
 set BREW "brew"
+set BREWFIX "($BREW --prefix)"
 if [ (uname -m) = "x86_64" ]
     set BREW "arch -arm64 brew"
 end
@@ -41,7 +41,7 @@ end
 echo ''
 
 # Brewing
-if brew update && brew bundle && echo ''
+if $BREW update && $BREW bundle && echo ''
     echo "Brewed and ready."
 else
     echo "There was an issue with the brew."
