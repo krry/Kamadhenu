@@ -8,7 +8,7 @@ hr_msg ()  {
 }
 
 message () {
-  printf "\r  [ \033[00;34m(:\033[0m ] %s\n" "$1"
+    printf "\r  [ \033[00;34m(:\033[0m ] %s\n" "$1"
 }
 
 success () {
@@ -16,13 +16,13 @@ success () {
 }
 
 warning () {
-  printf "\r  [ \033[00;33mUH\033[0m ] %s\n" "$1"
-  WARNED=true
+    printf "\r  [ \033[00;33mUH\033[0m ] %s\n" "$1"
+    WARNED=true
 }
 
 failure () {
-  printf "\r\033[2K  [\033[0;31mNO\033[0m] %s\n" "$1"
-  exit
+    printf "\r\033[2K  [\033[0;31mNO\033[0m] %s\n" "$1"
+    exit
 }
 
 # Checking for Homebrew
@@ -34,8 +34,6 @@ else
     printf "Sorry, you'll need Homebrew for Kamadhenu to install itself."
     printf "See the REAMDE.md for manual installation instructions."
     exit 2
-
-
 fi
 echo ''
 
@@ -72,8 +70,8 @@ fi
 echo ''
 
 # Symlinking
-if [ -L /usr/local/bin/Kamadhenu ] > /dev/null 2>&1 ; then
-    rm /usr/local/bin/Kamadhenu;
+if [ -L ${BREWFIX}/bin/Kamadhenu ] > /dev/null 2>&1 ; then
+    rm ${BREWFIX}/bin/Kamadhenu;
 fi
 message "Symlinking Kamadhenu into $BREWFIX/bin"
 echo ''
