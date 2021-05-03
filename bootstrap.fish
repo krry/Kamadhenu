@@ -14,6 +14,10 @@ echo ''
 
 # CONSTANTS
 set BREWFIX "(brew --prefix)"
+set BREW "brew"
+if [ (uname -m) = "x86_64" ]
+    set BREW "arch -arm64 brew"
+end
 set COW_DIR $BREWFIX/share/cows/
 set FIGLET_DIR $BREWFIX/share/figlet/fonts
 set FORTUNE_DIR $BREWFIX/share/games/fortunes
