@@ -55,9 +55,8 @@ if (($git_clone_status < 2)); then
     success "Repository cloned into $PWD"
     cd "./Kamadhenu" && cd_status=$?
     if ((cd_status < 2)); then
-        message "Building Kamadhenu's temple..."
-        cp -f ./Kamadhenu /usr/local/bin/
         message "Updating brew and unbundling brewfile..."
+        brew_up
     else
         failure "Oops, flubbed the dismount. Couldn't find the cloned files."
         failure "Find 'Kamadhenu' in $PWD and type 'brew bundle' to continue."
@@ -68,79 +67,93 @@ else
     exit 1
 fi
 
-# Brewing
-brew update && brew bundle
-brew_status=$?
-if (($brew_status < 2)); then
-    success "Brewed and ready."
-else
-    warning "There was an issue with the brew."
-fi
+brew_up () {
+    # Brewing
+    brew update && brew bundle
+    brew_status=$?
+    if (($brew_status < 2)); then
+        success "Brewed and ready."
+        build_temple
+    else
+        failure "There was an issue with the brew."
+    fi
+}
 
-# Symlinking
-if [ -L ${BREWFIX}/bin/Kamadhenu ] > /dev/null 2>&1 ; then
-    rm ${BREWFIX}/bin/Kamadhenu;
-fi
-message "Symlinking Kamadhenu into $BREWFIX/bin"
+build_temple () {
+    message "Adding Kamadhenu into $BREWFIX/bin"
 
-ln -s "$PWD/Kamadhenu" "$BREWFIX/bin/"
-symlink_status=$?
-if (($symlink_status < 2)); then
-    success "Kamadhenu symlinked"
-else
-    warning "Failed to symlink. You'll want to see to that."
-fi
+    cp -f "$PWD/Kamadhenu" "$BREWFIX/bin"
+    symlink_status=$?
 
-# Copying Data
-hr_msg "Herding cowsays" "(oo) "
-cp -n "${PWD}/cows/"*.cow "$COW_DIR"
-cow_status=$?
-if (($cow_status < 2)); then
-    success "Cowsays herded into $COW_DIR"
-else
-    warning "Couldn't copy cows into $COW_DIR"
-fi
+    if (($symlink_status < 2)); then
+        success "Kamadhenu now lives in your homebrew bin"
+    else
+        warning "Failed to symlink. Kamadhenu wants to live in $BREWFIX/bin."
+    fi
+    herd_cowsays
+}
 
-hr_msg "Wrangling figlets" "<..> "
+herd_cowsays () {
+    # Copying Data
+    hr_msg "Herding cowsays" "(oo) "
+    cp -n "${PWD}/cows/"*.cow "$COW_DIR"
+    cow_status=$?
+    if (($cow_status < 2)); then
+        success "Cowsays herded into $COW_DIR"
+    else
+        warning "Couldn't copy all the cows into $COW_DIR"
+    fi
+    wrangle_figlets
+}
 
-cp -n "${PWD}/figlet/fonts/"*.flf "$FIGLET_DIR"
-figlet_status=$?
+wrangle_figlets () {
+    hr_msg "Wrangling figlets" "<..> "
 
-if (($figlet_status < 2)); then
-    success "Figlets wrangled into $FIGLET_DIR"
-else
-    warning "Couldn't copy FIGlet fonts into $FIGLET_DIR"
-fi
+    cp -n "${PWD}/figlet/fonts/"*.flf "$FIGLET_DIR"
+    figlet_status=$?
 
-hr_msg "Stuffing fortune cookies" "\$\$ "
+    if (($figlet_status < 2)); then
+        success "Figlets wrangled into $FIGLET_DIR"
+    else
+        warning "Couldn't copy all the FIGlet fonts into $FIGLET_DIR"
+    fi
+    stuff_fortunes
+}
 
-cp -n "${PWD}/fortunes/"* "$FORTUNE_DIR"
-fortune_status=$?
+stuff_fortunes () {
+    hr_msg "Stuffing fortune cookies" "\$\$ "
 
-if (($fortune_status < 2)); then
-    success "Fortunes stuffed into $FORTUNE_DIR"
-else
-    warning "Couldn't copy Fortunes into $FORTUNE_DIR"
-fi
+    cp -n "${PWD}/fortunes/"* "$FORTUNE_DIR"
+    fortune_status=$?
 
-if [ $WARNED ]; then
-    warning "Check the warnings above to fix the flubs."
-else
-    success "Installation complete."
-    echo ''
-    hr_msg "GREAT SUCCESS!" "$"
-    sleep 2
-    echo ''
-    echo ''
-    printf "You may now call upon Kamadhenu, like so..." | cowsay -f fox | lolcat
-    echo ''
-    echo ''
-    sleep 3
-    echo ''
-    echo ''
-    figlet -f computer "Kamadhenu" | lolcat -a
-    echo ''
-    echo ''
-    sleep 3
-    Kamadhenu
-fi
+    if (($fortune_status < 2)); then
+        success "Fortunes stuffed into $FORTUNE_DIR"
+    else
+        warning "Couldn't copy all the Fortunes into $FORTUNE_DIR"
+    fi
+    finish_install
+}
+
+finish_install () {
+    if [ $WARNED ]; then
+        warning "Check the warnings above to fix the flubs."
+    else
+        success "Installation complete."
+        echo ''
+        hr_msg "GREAT SUCCESS!" "$"
+        sleep 2
+        echo ''
+        echo ''
+        printf "You may now call upon Kamadhenu, like so..." | cowsay -f fox | lolcat
+        echo ''
+        echo ''
+        sleep 3
+        echo ''
+        echo ''
+        figlet -f computer "Kamadhenu" | lolcat -a
+        echo ''
+        echo ''
+        sleep 3
+        Kamadhenu
+    fi
+}

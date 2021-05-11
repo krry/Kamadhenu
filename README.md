@@ -8,7 +8,7 @@ An udderly absurd soothsayer for your shell.
 ## Installation
 
 ``` sh
-curl -fsSL https://raw.githubusercontent.com/krry/Kamadhenu/master/bootstrap.sh | $SHELL
+curl -fsSL https://raw.githubusercontent.com/krry/Kamadhenu/master/bootstrap.sh | bash
 ```
 
 Then follow the bouncing bytes...
