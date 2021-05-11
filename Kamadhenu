@@ -22,7 +22,9 @@ randomize() {
 printFortune() {
     randomize
     unset COW_OPTS && COW_OPTS="-W ${KMD_COLS} -f ${COW}"
-    if [ -z "$1" ] ; then
+    if [ "$1" == "0" ]; then
+        exit 0
+    elif [ -z "$1" ] || [ "$1" == "1" ]; then
         LOL_OPTS=''
         fortune -sn 320 | cowsay $COW_OPTS | lolcat $LOL_OPTS
         exit 0
@@ -31,10 +33,15 @@ printFortune() {
         figlet -w 48 -cf cybermedium 'Kamadhenu' | lolcat $LOL_OPTS
         sleep 1
         errorMsg | lolcat $LOL_OPTS
-        sleep 1
+        sleep 2
         beginMsg | lolcat $LOL_OPTS
         sleep 1
         prompt
+    elif [[ $1 =~ ^-?[1-9]+$ ]]; then
+        fortune -sn 320 | cowsay $COW_OPTS | lolcat $LOL_OPTS
+        echo "$(($1 - 1)) remaining" && read -rsp $'Press any key to continue…
+        or Ctrl-C yourself out\n' -n 1 key
+        printFortune $(($1 - 1))
     else
         if [ ${#1} -le 14 ]; then
             figlet -w $KMD_COLS -f "$FONT" "$1" | cowsay -n $COW_OPTS | lolcat $LOL_OPTS
@@ -96,12 +103,13 @@ promptMsg() {
 
 _.-^-.__._.-..-.__.__._.-^-.__.-.._..-..__.-._
 +^+=^=+^+=+^+^+^==^+^+^+=+^+=^+^+=^=+^+=+^+^+^
-       What have you? Numbers? Words?
+       You may put words in my mouth,
+         or <ENTER> if you dare.
 ;,:.,:;,.,.:;.,.;:..,;.,:.;..;.,.;:..,;.,:.;..
 EOF
 }
 
-PROMPT=">> "
+PROMPT="\$ "
 
 # Call upon Kamadhenu!
 printFortune "$1"
