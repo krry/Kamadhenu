@@ -150,8 +150,7 @@ finish_install () {
     if [ $WARNED ]; then
         warning "Check the warnings above to fix the flubs."
     else
-        success "Cleaned up install files"
-        remove_tmp_dir
+        success "Cleaning up install files"
         success "Installation complete."
         hr_msg "GREAT SUCCESS!" "$"
         sleep 2
@@ -164,6 +163,7 @@ finish_install () {
         echo ''
         sleep 3
         Kamadhenu
+        remove_tmp_dir
     fi
 }
 
