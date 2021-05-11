@@ -2,7 +2,8 @@
 # Kamadhenu
 # an udderly abmurd moothmayer in your mhell
 
-KM_DIR="$(dirname "$(readlink "$0")")"
+KM_DIR="$(brew --prefix)"
+# KM_DIR="$(dirname "$(readlink "$0")")"
 KMD_COLS=$(($(tput cols)-3))
 MAX_COLS=128
 COW_OPTS=''
@@ -13,9 +14,9 @@ CUTOFF=1024
 
 randomize() {
     unset COW
-    COW=$(basename "$(find "$KM_DIR/cows/"*.cow | shuf -n 1)")
+    COW=$(basename "$(find "$KM_DIR/share/cows/"*.cow | shuf -n 1)")
     unset FONT
-    FONT=$(basename "$(find "$KM_DIR/figlet/fonts/"*.flf | shuf -n 1)")
+    FONT=$(basename "$(find "$KM_DIR/share/figlet/fonts/"*.flf | shuf -n 1)")
 }
 
 printFortune() {
