@@ -5,7 +5,6 @@ A soothsaying [MOTD](https://www.wikiwand.com/en/Motd_(Unix)) goddess for your *
 ## To install
 
 ``` shell
-cd where_you_like_to_keep_teh_codez
 curl -fsSL https://raw.githubusercontent.com/krry/Kamadhenu/main/bootstrap.sh | bash
 ```
 

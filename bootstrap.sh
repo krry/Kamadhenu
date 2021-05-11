@@ -5,6 +5,7 @@ BREWFIX="$(brew --prefix)"
 COW_DIR=${BREWFIX}/share/cows/
 FIGLET_DIR=${BREWFIX}/share/figlet/fonts
 FORTUNE_DIR=${BREWFIX}/share/games/fortunes
+KM_DIR=${PWD}/Kamadhenu
 
 # UTILS
 hr_msg ()  {
@@ -141,11 +142,17 @@ stuff_fortunes () {
     finish_install
 }
 
+remove_tmp_dir () {
+    echo rm -rf $KM_DIR
+    success "Removed temporary install files"
+}
+
 finish_install () {
     if [ $WARNED ]; then
         warning "Check the warnings above to fix the flubs."
     else
         success "Installation complete."
+        remove_tmp_dir
         hr_msg "GREAT SUCCESS!" "$"
         sleep 2
         echo ''
