@@ -14,3 +14,9 @@
 - [ ] batty interwoven CLI tomfoolery
 - [ ] colorschemes!
 - [ ] a Linux bootstrap script
+- [ ] add cowsay and figlet fonts to the repo (ideally as submodules)?
+  - [ ] categorize figlet fonts into non-readable, favored, others
+  - [ ] categorize cowsays into mono, color, and large
+- interactive mode
+  - editable cowsay bubble
+  - allow live typing in figlet?

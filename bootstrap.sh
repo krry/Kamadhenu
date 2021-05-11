@@ -143,16 +143,16 @@ stuff_fortunes () {
 }
 
 remove_tmp_dir () {
-    echo rm -rf $KM_DIR
-    success "Removed temporary install files"
+    rm -rf $KM_DIR
 }
 
 finish_install () {
     if [ $WARNED ]; then
         warning "Check the warnings above to fix the flubs."
     else
-        success "Installation complete."
+        success "Cleaned up install files"
         remove_tmp_dir
+        success "Installation complete."
         hr_msg "GREAT SUCCESS!" "$"
         sleep 2
         echo ''
