@@ -2,6 +2,7 @@
 
 (maybe someday)
 
+- [ ] have the bootstrap delete the cloned dir when it's done/successful/fails
 - [ ] getopts for:
   - [ ] cow face settings
   - [ ] choose default cow
