@@ -2,7 +2,7 @@
 
 # CONSTANTS
 BREWFIX="$(brew --prefix)"
-COW_DIR=${BREWFIX}/share/cows/
+COW_DIR=${BREWFIX}/share/cowsay/cows/
 FIGLET_DIR=${BREWFIX}/share/figlet/fonts
 FORTUNE_DIR=${BREWFIX}/share/games/fortunes
 # KM_DIR=${PWD}/Kamadhenu
