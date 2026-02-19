@@ -97,27 +97,17 @@ function displayFortune() {
   const output = generateCowsay(currentFortune, cows[currentCow]);
   const outputEl = document.getElementById('output');
   outputEl.textContent = output;
-  
-  // Apply rainbow mode if enabled
-  const rainbowMode = document.getElementById('rainbow-mode').checked;
-  const h1 = document.querySelector('h1');
-  
-  if (rainbowMode) {
-    outputEl.classList.add('rainbow');
-    h1.classList.add('rainbow');
-  } else {
-    outputEl.classList.remove('rainbow');
-    h1.classList.remove('rainbow');
-  }
 }
 
 // Event listeners
-document.getElementById('new-fortune').addEventListener('click', displayFortune);
-document.getElementById('rainbow-mode').addEventListener('change', displayFortune);
+document.getElementById('new-fortune').addEventListener('click', (e) => {
+  e.preventDefault();
+  displayFortune();
+});
 
-// Keyboard shortcut (space bar for new fortune)
+// Keyboard shortcuts (space or enter for new fortune)
 document.addEventListener('keydown', (e) => {
-  if (e.code === 'Space' && e.target === document.body) {
+  if ((e.code === 'Space' || e.code === 'Enter') && e.target === document.body) {
     e.preventDefault();
     displayFortune();
   }
