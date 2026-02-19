@@ -104,7 +104,7 @@ async function displayFortune() {
   const lines = output.split('\n');
   for (let i = 0; i < lines.length; i++) {
     outputEl.textContent += lines[i] + (i < lines.length - 1 ? '\n' : '');
-    await new Promise(resolve => setTimeout(resolve, 30)); // 30ms delay between lines
+    await new Promise(resolve => setTimeout(resolve, 40)); // 40ms delay between lines
   }
 }
 

@@ -48,8 +48,10 @@ main {
 .oracle-wrapper {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   gap: 3rem;
+  width: 100%;
+  position: relative;
 }
 
 .fortune-container {
@@ -57,6 +59,8 @@ main {
   padding: 0;
   margin: 0;
   overflow-x: auto;
+  flex: 1;
+  min-height: 500px; /* Reserve space to prevent layout shift */
 }
 
 .cowsay {
@@ -76,7 +80,9 @@ footer {
   flex-direction: column;
   align-items: flex-start;
   gap: 1rem;
-  align-self: flex-start;
+  position: sticky;
+  top: 2rem;
+  flex-shrink: 0;
 }
 
 .fortune-link {
