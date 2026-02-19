@@ -23,21 +23,35 @@ async function loadData() {
 
 // Generate cowsay speech bubble
 function generateCowsay(text, cowArt) {
-  const maxWidth = 40;
-  const words = text.split(' ');
+  const maxWidth = 60; // Increased from 40 to match terminal better
+  
+  // Preserve existing line breaks, then wrap long lines
+  const originalLines = text.split('\n');
   const lines = [];
-  let currentLine = '';
-
-  // Wrap text
-  words.forEach(word => {
-    if ((currentLine + ' ' + word).trim().length > maxWidth) {
-      lines.push(currentLine.trim());
-      currentLine = word;
+  
+  originalLines.forEach(line => {
+    if (line.trim().length === 0) {
+      // Preserve blank lines
+      lines.push('');
+    } else if (line.length <= maxWidth) {
+      // Line is short enough, keep as-is
+      lines.push(line.trim());
     } else {
-      currentLine += (currentLine ? ' ' : '') + word;
+      // Line is too long, wrap by words
+      const words = line.trim().split(' ');
+      let currentLine = '';
+      
+      words.forEach(word => {
+        if ((currentLine + ' ' + word).trim().length > maxWidth) {
+          if (currentLine) lines.push(currentLine.trim());
+          currentLine = word;
+        } else {
+          currentLine += (currentLine ? ' ' : '') + word;
+        }
+      });
+      if (currentLine) lines.push(currentLine.trim());
     }
   });
-  if (currentLine) lines.push(currentLine.trim());
 
   // Build speech bubble
   const bubbleWidth = Math.max(...lines.map(l => l.length), 10);
@@ -61,7 +75,7 @@ function generateCowsay(text, cowArt) {
   bubble += ' ' + '-'.repeat(bubbleWidth + 2) + '\n';
 
   // Replace $thoughts with speech bubble connector
-  const connector = lines.length === 1 ? '\\' : '\\';
+  const connector = '\\';
   const art = cowArt.replace(/\$thoughts/g, connector);
   
   return bubble + art;
