@@ -70,6 +70,14 @@ randomize() {
     FONT=$(basename "$(find "$KM_DIR/share/figlet/fonts/"*.flf | shuf -n 1)")
 }
 
+typewriter() {
+    # Print stdin line by line with a slight delay
+    while IFS= read -r line; do
+        echo "$line"
+        sleep 0.03  # 30ms delay between lines
+    done
+}
+
 printFortune() {
     randomize
     unset COW_OPTS && COW_OPTS="-W ${KMD_COLS} -f ${COW}"
@@ -77,7 +85,7 @@ printFortune() {
         exit 0
     elif [ -z "$1" ] || [ "$1" == "1" ]; then
         LOL_OPTS=''
-        fortune -sn 320 | cowsay $COW_OPTS | lolcat $LOL_OPTS
+        fortune -sn 320 | cowsay $COW_OPTS | typewriter | lolcat $LOL_OPTS
         exit 0
     elif [ "$1" == "help" ] || [ "$1" == '-h' ] ; then
         introMsg | lolcat ${LOL_OPTS}
@@ -89,15 +97,15 @@ printFortune() {
         sleep 1
         prompt
     elif [[ $1 =~ ^-?[1-9]+$ ]]; then
-        fortune -sn 320 | cowsay $COW_OPTS | lolcat $LOL_OPTS
+        fortune -sn 320 | cowsay $COW_OPTS | typewriter | lolcat $LOL_OPTS
         echo "$(($1 - 1)) remaining" && read -rsp $'Press any key to continue…
         or Ctrl-C yourself out\n' -n 1 key
         printFortune $(($1 - 1))
     else
         if [ ${#1} -le 14 ]; then
-            figlet -w $KMD_COLS -f "$FONT" "$1" | cowsay -n $COW_OPTS | lolcat $LOL_OPTS
+            figlet -w $KMD_COLS -f "$FONT" "$1" | cowsay -n $COW_OPTS | typewriter | lolcat $LOL_OPTS
         elif [ ${#1} -le "$CUTOFF" ]; then
-            echo "$1" | cut -c -$CUTOFF | cowsay $COW_OPTS | lolcat $LOL_OPTS
+            echo "$1" | cut -c -$CUTOFF | cowsay $COW_OPTS | typewriter | lolcat $LOL_OPTS
         fi
         printf '%*s' "$(tput cols)"  Kamadhenu
     fi

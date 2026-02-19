@@ -86,8 +86,8 @@ function random(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-// Display a new fortune
-function displayFortune() {
+// Display a new fortune with typewriter effect
+async function displayFortune() {
   if (fortunes.length === 0 || Object.keys(cows).length === 0) return;
   
   currentFortune = random(fortunes);
@@ -96,7 +96,16 @@ function displayFortune() {
   
   const output = generateCowsay(currentFortune, cows[currentCow]);
   const outputEl = document.getElementById('output');
-  outputEl.textContent = output;
+  
+  // Clear current output
+  outputEl.textContent = '';
+  
+  // Split into lines and display one at a time
+  const lines = output.split('\n');
+  for (let i = 0; i < lines.length; i++) {
+    outputEl.textContent += lines[i] + (i < lines.length - 1 ? '\n' : '');
+    await new Promise(resolve => setTimeout(resolve, 30)); // 30ms delay between lines
+  }
 }
 
 // Event listeners
