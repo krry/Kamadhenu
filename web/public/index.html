@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🐄 Kamadhenu — Web Oracle</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://kerry.ink/widgets/webring/webring.wc.js"></script>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>🐄 Kamadhenu</h1>
+      <p class="subtitle">The udderly absurd web oracle</p>
+    </header>
+
+    <div class="fortune-container">
+      <pre id="output" class="cowsay"></pre>
+    </div>
+
+    <div class="controls">
+      <button id="new-fortune" class="btn">New Fortune</button>
+      <label class="checkbox">
+        <input type="checkbox" id="rainbow-mode" checked>
+        <span>Rainbow Mode 🌈</span>
+      </label>
+    </div>
+
+    <footer>
+      <p>
+        <a href="https://github.com/krry/Kamadhenu" target="_blank" rel="noopener">
+          View Source on GitHub
+        </a>
+      </p>
+    </footer>
+  </main>
+
+  <!-- Webring Widget (Bottom Right) -->
+  <webring-widget 
+    data-source="https://kerry.ink/widgets/webring/webring.json"
+    mode="compact" 
+    theme="auto"
+    style="position: fixed; bottom: 2rem; right: 2rem; max-width: 320px; z-index: 1000;"
+  ></webring-widget>
+
+  <script src="app.js"></script>
+</body>
+</html>

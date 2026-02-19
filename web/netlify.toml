@@ -1,0 +1,11 @@
+[build]
+  publish = "public"
+  command = "node ../scripts/build-web-data.js"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
