@@ -86,10 +86,14 @@ function displayFortune() {
   
   // Apply rainbow mode if enabled
   const rainbowMode = document.getElementById('rainbow-mode').checked;
+  const h1 = document.querySelector('h1');
+  
   if (rainbowMode) {
     outputEl.classList.add('rainbow');
+    h1.classList.add('rainbow');
   } else {
     outputEl.classList.remove('rainbow');
+    h1.classList.remove('rainbow');
   }
 }
 
