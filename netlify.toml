@@ -1,6 +1,6 @@
 [build]
   publish = "web/public"
-  command = "node scripts/build-web-data.js"
+  command = "npm run build"
 
 [build.environment]
   NODE_VERSION = "22"

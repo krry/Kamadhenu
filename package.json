@@ -1,0 +1,11 @@
+{
+  "name": "kamadhenu-web",
+  "version": "1.0.0",
+  "description": "Kamadhenu Web Oracle",
+  "scripts": {
+    "build": "node scripts/build-web-data.js"
+  },
+  "engines": {
+    "node": "22"
+  }
+}
