@@ -75,8 +75,9 @@ main {
   font-family: 'Recursive', 'SF Mono', 'Monaco', 'Inconsolata', monospace;
   font-variation-settings: 'MONO' 1, 'CASL' 0, 'wght' 400, 'slnt' 0, 'CRSV' 0;
   text-shadow: 0 0 8px rgba(166, 226, 46, 0.3);
-  display: block;
+  display: inline-block;
   text-align: left;
+  min-width: min-content;
 }
 
 footer {
@@ -174,8 +175,10 @@ footer {
 
   .fortune-container {
     overflow-x: auto;
-    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overflow-y: hidden;
     max-height: 60vh;
+    max-width: 100%;
     padding: 0.5rem;
     border-radius: 4px;
     background: rgba(0, 0, 0, 0.3);
@@ -185,6 +188,8 @@ footer {
     font-size: 13px;
     line-height: 1.25;
     white-space: pre;
+    display: inline-block;
+    min-width: min-content;
   }
 
   main {
