@@ -30,14 +30,17 @@ DESCRIPTION
   tension.
 
 INSTALLATION
-  macOS:
-    brew install krry/brews/kamadhenu
-  
-  Linux/Unix:
+  Easiest (any OS):
     curl -fsSL https://raw.githubusercontent.com/krry/Kamadhenu/main/install.sh | bash
-
-  Or download directly from:
+  
+  Manual download:
     https://github.com/krry/Kamadhenu/releases
+
+  Build from source:
+    git clone https://github.com/krry/Kamadhenu.git
+    cd Kamadhenu
+    make build
+    sudo make install
 
 COMMANDS
   kamadhenu
@@ -62,7 +65,8 @@ WEB FEATURES
   • Type your own message with "kamadhenu alias"
 
 TIPS
-  • Add to your ~/.bashrc or ~/.zshrc for daily chaos:
+  • Quick alias (add to ~/.bashrc or ~/.zshrc):
+    alias kama='kamadhenu'
     alias fortune='kamadhenu'
   
   • Pipe into other tools:
@@ -71,8 +75,8 @@ TIPS
   • Perfect for shell startup messages and commit inspiration
 
 WEB vs CLI
-  Web version: Instant browser access, rainbow colors, no install
-  CLI tool:   Full shell integration, scriptable, portable
+  Web version:  Instant browser access, rainbow colors, no install needed
+  CLI tool:     Full shell integration, scriptable, portable, zero deps
 
 ABOUT
   Built with love and fortune cookies.
