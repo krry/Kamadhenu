@@ -168,7 +168,7 @@ footer {
 }
 
 @media (max-width: 600px) {
-  /* Mobile portrait optimizations */
+  /* Mobile portrait: reduce font to fit without scrolling */
   body {
     padding: 0.5rem;
   }
@@ -178,21 +178,14 @@ footer {
     min-height: auto;
   }
 
-  .oracle-wrapper {
-    width: 100%;
-  }
-
   .fortune-container {
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    height: 60vh;
-    width: calc(100vw - 1rem);
+    min-height: 300px;
+    overflow-x: hidden;
   }
 
   .cowsay {
-    font-size: 13px;
-    line-height: 1.25;
+    font-size: 11px;
+    line-height: 1.2;
   }
 
   h1.watermark {
