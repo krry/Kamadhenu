@@ -59,10 +59,12 @@ main {
   padding: 0;
   margin: 0;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
   flex: 1;
   min-height: 500px; /* Reserve space to prevent layout shift */
   cursor: pointer; /* Suggest tappable */
   touch-action: pan-y; /* Allow vertical scrolling but capture horizontal swipes for logic */
+  min-width: 0; /* Allow flex shrinking below content width */
 }
 
 .cowsay {
@@ -131,6 +133,10 @@ footer {
 .rainbow-6 { color: #ff8bd1; }  /* magenta */
 
 @media (max-width: 900px) {
+  body {
+    padding: 1rem;
+  }
+
   h1.watermark {
     font-size: 6rem;
   }
@@ -151,5 +157,42 @@ footer {
   
   main {
     padding: 1rem;
+    min-height: auto;
+  }
+  
+  .fortune-container {
+    min-height: auto;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  /* Mobile portrait optimizations */
+  body {
+    padding: 0.5rem;
+  }
+
+  .fortune-container {
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: 60vh;
+    padding: 0.5rem;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  .cowsay {
+    font-size: 13px;
+    line-height: 1.25;
+    white-space: pre;
+  }
+
+  main {
+    padding: 0.5rem;
+    min-height: auto;
+  }
+
+  h1.watermark {
+    font-size: 4rem;
   }
 }
