@@ -173,12 +173,21 @@ footer {
   body {
     padding: 0.5rem;
     align-items: flex-start;
+    overflow-x: visible;
   }
 
   main {
     padding: 0.5rem;
     padding-top: 8vh;
     min-height: auto;
+    max-width: none;
+    width: 100vw;
+    overflow-x: visible;
+  }
+
+  .oracle-wrapper {
+    width: 100vw;
+    overflow-x: visible;
   }
 
   .fortune-container {
