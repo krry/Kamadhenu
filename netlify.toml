@@ -1,8 +1,7 @@
 [build]
   publish = "web/public"
-  
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
-
