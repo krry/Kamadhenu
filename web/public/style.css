@@ -183,11 +183,10 @@ footer {
   .fortune-container {
     width: calc(100vw - 1rem);
     max-width: calc(100vw - 1rem);
-    font-size: 13px;
+    font-size: 11px;
     overflow-x: auto;
-    overflow-y: hidden;
+    overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    height: 60vh;
   }
 
   .cowsay {
