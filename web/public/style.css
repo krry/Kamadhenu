@@ -63,7 +63,7 @@ main {
   flex: 1;
   min-height: 500px; /* Reserve space to prevent layout shift */
   cursor: pointer; /* Suggest tappable */
-  touch-action: pan-y; /* Allow vertical scrolling but capture horizontal swipes for logic */
+  /*touch-action: pan-y; /* Allow vertical scrolling but capture horizontal swipes for logic */*/
 }
 
 .cowsay {
@@ -142,26 +142,26 @@ footer {
   h1.watermark {
     font-size: 6rem;
   }
-  
+
   .oracle-wrapper {
     flex-direction: column;
     gap: 2rem;
   }
-  
+
   footer {
     align-items: center;
     align-self: center;
   }
-  
+
   .cowsay {
     font-size: 14px;
   }
-  
+
   main {
     padding: 1rem;
     min-height: auto;
   }
-  
+
   .fortune-container {
     flex: 1;
     min-height: auto;
