@@ -1,0 +1,49 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Build binaries
+        run: |
+          chmod +x build.sh
+          ./build.sh ${GITHUB_REF#refs/tags/}
+
+      - name: Prepare release assets
+        run: |
+          cp kamadhenu.1 dist/
+          cp install.sh dist/
+          chmod +x dist/install.sh
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: dist/*
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+          body: |
+            ## Quick Install
+            ```bash
+            curl -fsSL https://raw.githubusercontent.com/krry/Kamadhenu/main/install.sh | bash
+            ```
+            
+            Or download the binary for your platform below.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

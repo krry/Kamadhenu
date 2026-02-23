@@ -1,0 +1,76 @@
+.TH KAMADHENU 1 "February 2026" "Kamadhenu 2.0" "User Commands"
+.SH NAME
+kamadhenu \- udderly absurd fortune teller
+.SH SYNOPSIS
+.B kamadhenu
+[\fB\-h\fR]
+[\fB\-v\fR]
+[\fB\-\-fast\fR]
+[\fB\-\-mono\fR | \fB\-\-no-color\fR]
+[\fB\-\-unicorn\fR]
+[\fBsummon\fR | \fItext\fR | \fInumber\fR]
+.SH DESCRIPTION
+.B kamadhenu
+displays random fortunes from a collection of 13,443 quotes, jokes, and wisdom, 
+rendered through one of 109 ASCII art cows with rainbow gradient colors.
+.PP
+With no arguments, displays one random fortune. Use
+.B summon
+to enter interactive mode. Pass text to have a cow say it, 
+or a number to display that many sequential fortunes.
+.SH OPTIONS
+.TP
+.B \-h
+Display help message and exit.
+.TP
+.B \-v
+Display version information and exit.
+.TP
+.B \-\-fast
+Skip the typewriter effect (print instantly).
+.TP
+.B \-\-mono, \-\-no-color
+Disable rainbow gradient colors.
+.TP
+.B \-\-unicorn
+Chaotic rainbow mode with random RGB phase shifts. Creates wild, unexpected color combinations that vary each run.
+.SH EXAMPLES
+.TP
+.B kamadhenu
+Display one random fortune.
+.TP
+.B kamadhenu summon
+Launch interactive mode.
+.TP
+.B kamadhenu "Hello, world"
+Display custom text in a speech bubble from a random cow.
+.TP
+.B kamadhenu 5
+Show 5 random fortunes in sequence.
+.TP
+.B kamadhenu \-\-fast \-\-mono
+Quick fortune without colors or animation.
+.TP
+.B kamadhenu \-\-unicorn "Chaos!"
+Wild rainbow colors with random phase shifts.
+.SH INTERACTIVE MODE
+Launch with
+.B kamadhenu summon.
+In interactive mode, you can:
+.IP \(bu 2
+Press Enter for a random fortune
+.IP \(bu 2
+Type text to have a cow say it
+.IP \(bu 2
+Type a number to see N fortunes
+.IP \(bu 2
+Press Ctrl-C to exit
+.SH FILES
+All fortune and cow data is embedded in the binary. No external files required.
+.SH AUTHOR
+Kerry Snyder (krry)
+.SH SEE ALSO
+.BR fortune (6),
+.BR cowsay (1)
+.SH COPYRIGHT
+MIT License. See https://github.com/krry/Kamadhenu for source code.

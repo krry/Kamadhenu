@@ -1,110 +1,316 @@
-# KAMADHENU
+# Kamadhenu 🐄🌈
 
-An udderly absurd MOTD soothsayer for your *nix `$SHELL`
+> An udderly absurd fortune teller in your shell
 
-![Vaporware](./img/kama-ghost.png)
-![TOC]
+Kamadhenu is a delightful mashup of `fortune` and `cowsay` with rainbow gradients, packaged as a **single standalone binary** with zero dependencies.
 
-## Install
+## Features
 
-``` shell
-curl -fsSL https://raw.githubusercontent.com/krry/Kamadhenu/main/bootstrap.sh | bash
+- 🎲 **13,443 fortunes** embedded (or use your own!)
+- 🐄 **109 ASCII cows** embedded  
+- 🌈 **Rainbow gradients** with subtle randomness (organic feel)
+- 🦄 **Unicorn mode** - chaotic rainbow colors (wild combos)
+- ⌨️  **Typewriter effect** (optional)
+- 🎮 **Interactive mode** or one-shot usage
+- 📦 **Zero dependencies** - single binary, works out of the box
+- 📝 **Custom sources** - add your own fortune files or URLs
+- 🎁 **Easter egg** - `kamadhenu alias` installs `kama` shortcut
+
+## Installation
+
+### One-Liner (Easiest)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/krry/Kamadhenu/main/install.sh | bash
 ```
 
-Then follow the bouncing bytes...
+This auto-detects your OS/architecture and installs the binary + man page.
 
-Fresh out of the box,\
-you get a bare minimum of\
-**`275,254,848` spurts of insight**\
-delivered one. at. a. time.
+### Manual Download
 
-## Use
+```bash
+# macOS (Apple Silicon)
+curl -L https://github.com/krry/Kamadhenu/releases/latest/download/kamadhenu-darwin-arm64 -o kamadhenu
+curl -L https://github.com/krry/Kamadhenu/releases/latest/download/kamadhenu.1 -o kamadhenu.1
+chmod +x kamadhenu
+sudo install -m 755 kamadhenu /usr/local/bin/
+sudo install -m 644 kamadhenu.1 /usr/local/share/man/man1/
 
-All you have to do is call her name.
+# macOS (Intel)
+curl -L https://github.com/krry/Kamadhenu/releases/latest/download/kamadhenu-darwin-amd64 -o kamadhenu
+curl -L https://github.com/krry/Kamadhenu/releases/latest/download/kamadhenu.1 -o kamadhenu.1
+chmod +x kamadhenu
+sudo install -m 755 kamadhenu /usr/local/bin/
+sudo install -m 644 kamadhenu.1 /usr/local/share/man/man1/
 
-``` shell
-Kamadhenu
+# Linux
+curl -L https://github.com/krry/Kamadhenu/releases/latest/download/kamadhenu-linux-amd64 -o kamadhenu
+curl -L https://github.com/krry/Kamadhenu/releases/latest/download/kamadhenu.1 -o kamadhenu.1
+chmod +x kamadhenu
+sudo install -m 755 kamadhenu /usr/local/bin/
+sudo install -m 644 kamadhenu.1 /usr/local/share/man/man1/
 ```
 
-Who dares put words in the mouth of Kamadhenu?
+### Short Alias (Optional)
 
-``` shell
-Kamadhenu Do you love me?
-echo ' '
-Kamadhenu Could you learn to love me?
+Add to your `~/.bashrc`, `~/.zshrc`, or `~/.config/fish/config.fish`:
+
+```bash
+# bash/zsh
+alias kama='kamadhenu'
+
+# fish
+alias kama kamadhenu
 ```
 
-Kamadhenu may not help, but you can still ask.
+Then use: `kama -h`, `kama "hello"`, etc.
 
-``` shell
-Kamadhenu help
+### Homebrew (Coming Soon)
+
+```bash
+brew tap krry/kamadhenu
+brew install kamadhenu
 ```
 
-Pick a number between 1 and `Ctrl-C`
+### Build from Source
 
-``` shell
-Kamadhenu 2021
+```bash
+git clone https://github.com/krry/Kamadhenu.git
+cd Kamadhenu
+make build
+sudo make install  # Installs binary + man page
 ```
 
-Start each shell sesh fresh with Kamadhenu
+## Usage
 
-``` shell
-echo Kamadhenu >> .$(basename $SHELL)rc
+```bash
+# One random fortune (default)
+kamadhenu
+
+# Interactive mode
+kamadhenu summon
+
+# Interactive mode, monochrome (flags before subcommands!)
+kamadhenu --mono summon
+
+# Quick fortune (no animation)
+kamadhenu --fast
+
+# Custom text
+kamadhenu "Hello, world"
+
+# Show N fortunes in sequence
+kamadhenu 5
+
+# Unicorn mode (chaotic rainbow colors)
+kamadhenu --unicorn
+
+# Monochrome output
+kamadhenu --mono
+
+# Fast + plain output
+kamadhenu --fast --mono
 ```
 
-Oh, dear, is it Terminal?
+## Options
 
-### Coming soon (maybe)
-
-Pipe `stdout` to Kamadhenu (like a cat)
-
-``` shell
-# echo "You ever drunk Bailey's out of a shoe?" | Kamadhenu
+```
+-h            Show help
+-v            Show version
+--mono        Disable rainbow colors (monochrome)
+--no-color    Alias for --mono
+--fast        Skip typewriter effect
+--unicorn     Chaotic rainbow mode (wild color combos)
 ```
 
-## Dependencies
+## Rainbow Modes
 
-- [fortune](https://github.com/bmc/fortunes/)
-- [cowsay](https://linux.die.net/man/1/cowsay)
-- [lolcat](https://github.com/busyloop/lolcat)
-- [figlet](http://www.figlet.org/)
-- and `coreutils`, specifically for GNU `shuf` which Macs don't come with.
+**Normal (default):**
+- Random starting hue each run (rotates the rainbow)
+- Smooth gradient across the classic spectrum
+- Classic red→orange→yellow→green→blue→purple
 
-## Troubleshooting
+**Unicorn mode (`--unicorn`):**
+- Random RGB phase shifts each run
+- Creates unexpected color palettes (lime/purple, cyan/yellow, etc.)
+- Brightness boosted for readability on dark terminals
+- Every run is a unique surprise
 
-If you encounter a hiccup, hold your breath. Anything else, check here.
+Try it:
+```bash
+kamadhenu --unicorn "Chaos reigns!"
+```
 
-### No Homebrew, dog? That's otay
+## Custom Fortune Sources
 
-The dependencies are listed in the `Brewfile` and right nearby.
-If you gather those, you're most of the way there. All that's left is to copy those artisanally curated, hand-fingered cows, fonts, and fortunes into their respective homes on your machine.
+Add your own quotes, wisdom, or humor:
 
-### Flubbed with the dismount? Failed to symlink?
+```bash
+# List current sources
+kamadhenu sources list
 
-The likely culprits are file permissions. Make sure you launch the bootstrap script from the safety of a locally owned, openly permissioned dir.
+# Add a local file
+kamadhenu sources add ~/my-quotes.txt
 
-If nothing happens when you fire `Kamadhenu` into the command line, the symlink probably didn't make it into your `PATH`. Nobody knows your `PATH` like you do, so give it an `echo $PATH` and find your way.
+# Add a URL (cached for 24h)
+kamadhenu sources add https://example.com/quotes.json
 
-#### Missing cows and/or figlets? Fortunes failing?
+# Remove a source
+kamadhenu sources rm ~/my-quotes.txt
 
-These need to be where `cowsay`, `figlet`, and `fortune` would look for them. Once again, you have a keen advantage in determining this.
+# Reset to embedded fortunes
+kamadhenu sources reset
+```
 
-First determine your `brew --prefix`.
+**Supported formats:**
+- **Fortune format:** Text separated by `\n%\n`
+- **JSON:** `[{"quote": "...", "author": "..."}]` or single object
+- **Plain text:** One quote per line (# for comments)
+- **Paragraphs:** Quotes separated by double newlines
 
-On Macs with Intel chips we tend to use `/usr/local`, and for the Apple Silicon we tend to use `/opt/homebrew`.
+**Examples:**
 
-- cows go in: `/usr/local/share/cows`
-- figlets in: `/usr/local/share/figlet/fonts`
-- fortunes => `/usr/local/share/games/fortunes`
+Fortune format (`my-quotes.txt`):
+```
+The best time to plant a tree was 20 years ago.
+The second best time is now.
+%
+Be yourself; everyone else is already taken.
+		— Oscar Wilde
+```
 
-## Many Gratitudes
+JSON format (from URL or file):
+```json
+[
+  {"quote": "Life is what happens...", "author": "John Lennon"},
+  {"text": "The only way out is through."}
+]
+```
 
-If you especially enjoy Kamadhenu, fork away, or come and play!
+Plain text:
+```
+Every line is a separate fortune
+# Comments start with #
+This is another fortune
+```
 
-I began this project because I didn't know jack about shell scripting. And I still don't!
+## Easter Egg: Shell Alias
 
-Now that it's alive, it might be fun to glitter the flock out of it.
+Install the `kama` alias for quick access:
 
-And who doesn't need yet another MOTD, amirite?
+```bash
+kamadhenu alias
+# Adds 'alias kama=kamadhenu' to your shell config
 
-![Zuckle at the zipple of wisdom](./img/Kamadhenu.jpg)
+# Then use it:
+kama
+kama summon
+kama --unicorn "wheee"
+```
+
+## Examples
+
+### Interactive Mode
+```bash
+$ kamadhenu
+                    {}}
+                   {{}{}
+                  {{}}{}}
+                 &>&&&&?&@
+               &&@&&&@*&@#&#@
+            &&&&#&*&&&&@&&&#&&&@
+         &#&&@&&$&&&&&&&&&&&@&#&*&@
+      &&*$&&$&7&&&$&>&&&&?&&&<&#&$&&#@
+   &&&&&&$&&&&@&!&&&&&&&&&&&&#&*&#&&@>*&&
+ &&!*&#+&&&&&!&<@&?&&&&?&&@&&/&#@&&&#&<&@&&&
+&*  Prostrate yourself before the Almighty  &@
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+          Now, let's cast your lots.
+```
+
+### Custom Text
+```bash
+$ kamadhenu "Life is absurd"
+ _______________
+< Life is absurd >
+ ---------------
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||
+```
+
+## Development
+
+### Project Structure
+
+```
+kamadhenu/
+├── main.go                  # CLI entry point
+├── internal/
+│   ├── fortune/             # Fortune loading & selection
+│   ├── cowsay/              # Cow rendering & word wrap
+│   ├── colors/              # Rainbow gradient (lolcat replacement)
+│   └── typewriter/          # Line-by-line output effect
+├── cows/                    # 109 .cow files (embedded)
+├── fortunes/                # Fortune files (embedded)
+└── README.md
+```
+
+### Build for All Platforms
+
+```bash
+# macOS (Apple Silicon)
+GOOS=darwin GOARCH=arm64 go build -o dist/kamadhenu-darwin-arm64
+
+# macOS (Intel)
+GOOS=darwin GOARCH=amd64 go build -o dist/kamadhenu-darwin-amd64
+
+# Linux (amd64)
+GOOS=linux GOARCH=amd64 go build -o dist/kamadhenu-linux-amd64
+
+# Linux (arm64)
+GOOS=linux GOARCH=arm64 go build -o dist/kamadhenu-linux-arm64
+
+# Windows
+GOOS=windows GOARCH=amd64 go build -o dist/kamadhenu-windows-amd64.exe
+```
+
+### Adding New Cows or Fortunes
+
+1. Drop `.cow` files into `cows/`
+2. Add fortune text to `fortunes/` (use `%` as delimiter)
+3. Rebuild: `go build -o kamadhenu`
+
+The `//go:embed` directives automatically include all files.
+
+## Tech Stack
+
+- **Language:** Go 1.22+
+- **Dependencies:** 
+  - `golang.org/x/term` (terminal width detection)
+- **Embedded Data:** All cows and fortunes baked into the binary via `embed.FS`
+
+## Distribution Roadmap
+
+- [x] GitHub Releases (binaries for macOS/Linux)
+- [ ] Homebrew Tap (`brew tap krry/kamadhenu`)
+- [ ] Homebrew Core (`brew install kamadhenu`)
+- [ ] AUR (Arch Linux)
+- [ ] Snap/Flatpak
+
+## Credits
+
+- Inspired by the original shell script mashup
+- Built on the legacy of `fortune`, `cowsay`, and `lolcat`
+- Cow files from various community sources
+
+## License
+
+MIT
+
+---
+
+**Prostrate yourself before the Almighty.** 🐄✨
