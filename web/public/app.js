@@ -149,9 +149,18 @@ newFortuneBtn.addEventListener('click', (e) => {
 
 // Tap on oracle to refresh (click handles taps)
 const oracleWrapper = document.querySelector('.oracle-wrapper');
+const fortuneContainer = document.querySelector('.fortune-container');
+let wasScrolling = false;
+let touchStartScrollX = 0;
+
 oracleWrapper.addEventListener('click', (e) => {
   // Don't trigger if clicking links/footer or selecting text
   if (e.target.closest('footer') || e.target.closest('a') || window.getSelection().toString()) return;
+  // Don't trigger if user just scrolled
+  if (wasScrolling) {
+    wasScrolling = false;
+    return;
+  }
   displayFortune();
 });
 
@@ -159,13 +168,29 @@ oracleWrapper.addEventListener('click', (e) => {
 let touchStartX = 0;
 let touchStartY = 0;
 
+// Scroll detection on fortune-container
+fortuneContainer.addEventListener('touchstart', (e) => {
+  touchStartScrollX = fortuneContainer.scrollLeft;
+}, { passive: true });
+
+fortuneContainer.addEventListener('scroll', (e) => {
+  // If scroll position changed, mark as scrolling
+  if (fortuneContainer.scrollLeft !== touchStartScrollX) {
+    wasScrolling = true;
+  }
+}, { passive: true });
+
 // Swipe logic restricted to oracle area
 oracleWrapper.addEventListener('touchstart', (e) => {
   touchStartX = e.changedTouches[0].screenX;
   touchStartY = e.changedTouches[0].screenY;
+  wasScrolling = false;
 }, { passive: true });
 
 oracleWrapper.addEventListener('touchend', (e) => {
+  // If already scrolling, don't treat as swipe
+  if (wasScrolling) return;
+  
   const touchEndX = e.changedTouches[0].screenX;
   const touchEndY = e.changedTouches[0].screenY;
   
