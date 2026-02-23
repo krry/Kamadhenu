@@ -3,41 +3,60 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🐄 Kamadhenu — Web Oracle</title>
+  <title>🐄 Kamadhenu — Help</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Recursive:wght,MONO,CASL,slnt,CRSV@300..1000,0..1,0..1,-15..0,0..1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <script src="https://kerry.ink/widgets/webring/webring.wc.js"></script>
 </head>
 <body>
-  <h1 class="watermark">kamadhenu</h1>
+  <h1 class="watermark">kama help</h1>
 
   <main>
     <div class="oracle-wrapper">
       <div class="fortune-container">
-        <pre id="output" class="cowsay"></pre>
+        <pre class="cowsay" style="color:#e6db74; text-shadow:none;">KAMADHENU WEB HELP
+===================
+
+$&gt; kamadhenu
+  Pull a fresh random fortune + random cow.
+
+$&gt; kamadhenu alias
+  Put your own words in Kamadhenu's mouth.
+
+$&gt; kama help
+  You're here.
+
+$&gt; kama source
+  Open GitHub source.
+
+WEB FEATURES
+------------
+- Rainbow output (lolcat energy)
+- Tap or click anywhere on the oracle to refresh
+- Swipe horizontally to refresh (mobile)
+- Press Enter or Space for a new fortune
+
+CLI FEATURES (desktop script)
+-----------------------------
+Kamadhenu
+Kamadhenu help
+Kamadhenu 2021
+Kamadhenu "Do you love me?"
+
+Tip: add Kamadhenu to shell startup for daily chaos.
+</pre>
       </div>
 
       <footer>
         <nav class="console-nav" aria-label="Kamadhenu commands">
-          <a href="#" id="new-fortune" class="console-link">$&gt; kamadhenu</a>
-          <a href="#" id="kama-alias" class="console-link">$&gt; kamadhenu alias</a>
+          <a href="index.html" class="console-link">$&gt; kamadhenu</a>
+          <a href="index.html" class="console-link">$&gt; kamadhenu alias</a>
           <a href="help.html" class="console-link">$&gt; kama help</a>
           <a href="https://github.com/krry/Kamadhenu" target="_blank" rel="noopener" class="console-link">$&gt; kama source</a>
         </nav>
       </footer>
     </div>
   </main>
-
-  <!-- Webring Widget (Bottom Right) -->
-  <webring-widget 
-    data-source="https://kerry.ink/widgets/webring/webring.json"
-    mode="compact" 
-    theme="auto"
-    style="position: fixed; bottom: 2rem; right: 2rem; max-width: 320px; z-index: 1000;"
-  ></webring-widget>
-
-  <script src="app.js"></script>
 </body>
 </html>

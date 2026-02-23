@@ -86,33 +86,103 @@ function random(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-// Display a new fortune with typewriter effect
-async function displayFortune() {
-  if (fortunes.length === 0 || Object.keys(cows).length === 0) return;
-  
-  currentFortune = random(fortunes);
-  const cowNames = Object.keys(cows);
-  currentCow = random(cowNames);
-  
-  const output = generateCowsay(currentFortune, cows[currentCow]);
+function escapeHtml(str) {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+async function renderRainbowOutput(output) {
   const outputEl = document.getElementById('output');
-  
-  // Clear current output
-  outputEl.textContent = '';
-  
-  // Split into lines and display one at a time
+  outputEl.innerHTML = '';
+
   const lines = output.split('\n');
   for (let i = 0; i < lines.length; i++) {
-    outputEl.textContent += lines[i] + (i < lines.length - 1 ? '\n' : '');
-    await new Promise(resolve => setTimeout(resolve, 40)); // 40ms delay between lines
+    const line = document.createElement('span');
+    line.className = `cowsay-line rainbow-${i % 7}`;
+    line.innerHTML = escapeHtml(lines[i]);
+    outputEl.appendChild(line);
+    await new Promise(resolve => setTimeout(resolve, 35));
   }
 }
 
+// Display a new fortune with typewriter + rainbow effect
+async function displayFortune() {
+  if (fortunes.length === 0 || Object.keys(cows).length === 0) return;
+
+  currentFortune = random(fortunes);
+  const cowNames = Object.keys(cows);
+  currentCow = random(cowNames);
+
+  const output = generateCowsay(currentFortune, cows[currentCow]);
+  await renderRainbowOutput(output);
+}
+
+async function displayAliasFortune() {
+  if (Object.keys(cows).length === 0) return;
+
+  const aliasInput = window.prompt('Put words in Kamadhenu\'s mouth:', currentFortune || 'Do you love me?');
+  if (aliasInput === null) return;
+
+  const trimmed = aliasInput.trim();
+  if (!trimmed) {
+    return displayFortune();
+  }
+
+  const cowNames = Object.keys(cows);
+  currentCow = random(cowNames);
+  currentFortune = trimmed;
+
+  const output = generateCowsay(currentFortune, cows[currentCow]);
+  await renderRainbowOutput(output);
+}
+
 // Event listeners
-document.getElementById('new-fortune').addEventListener('click', (e) => {
+const newFortuneBtn = document.getElementById('new-fortune');
+newFortuneBtn.addEventListener('click', (e) => {
   e.preventDefault();
   displayFortune();
 });
+
+const aliasBtn = document.getElementById('kama-alias');
+aliasBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  displayAliasFortune();
+});
+
+// Tap on oracle to refresh (click handles taps)
+const oracleWrapper = document.querySelector('.oracle-wrapper');
+oracleWrapper.addEventListener('click', (e) => {
+  // Don't trigger if clicking links/footer or selecting text
+  if (e.target.closest('footer') || e.target.closest('a') || window.getSelection().toString()) return;
+  displayFortune();
+});
+
+// Swipe detection variables
+let touchStartX = 0;
+let touchStartY = 0;
+
+// Swipe logic restricted to oracle area
+oracleWrapper.addEventListener('touchstart', (e) => {
+  touchStartX = e.changedTouches[0].screenX;
+  touchStartY = e.changedTouches[0].screenY;
+}, { passive: true });
+
+oracleWrapper.addEventListener('touchend', (e) => {
+  const touchEndX = e.changedTouches[0].screenX;
+  const touchEndY = e.changedTouches[0].screenY;
+  
+  const diffX = Math.abs(touchEndX - touchStartX);
+  const diffY = Math.abs(touchEndY - touchStartY);
+  
+  // Horizontal swipe trigger (prevent vertical scroll from triggering)
+  if (diffX > 50 && diffX > diffY) {
+    displayFortune();
+  }
+}, { passive: true });
 
 // Keyboard shortcuts (space or enter for new fortune)
 document.addEventListener('keydown', (e) => {
