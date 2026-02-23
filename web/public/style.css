@@ -171,23 +171,22 @@ footer {
   /* Mobile portrait: font size scales to fit 65 characters in viewport */
   body {
     padding: 0.5rem;
+    align-items: flex-start;
   }
 
   main {
     padding: 0.5rem;
+    padding-top: 8vh;
     min-height: auto;
   }
 
   .fortune-container {
-    /* Container is 65ch wide (65 character widths).
-       Font size scales so it fits in viewport minus padding */
-    width: 65ch;
     max-width: calc(100vw - 1rem);
-    font-size: calc((100vw - 1rem) / 65);
+    font-size: 11px;
     overflow-x: auto;
-    overflow-y: hidden;
+    overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    height: 60vh;
+    max-height: 60vh;
   }
 
   .cowsay {
@@ -196,5 +195,12 @@ footer {
 
   h1.watermark {
     font-size: 4rem;
+  }
+  footer {
+      position: fixed;
+      bottom: 4rem;
+      left: 0;
+      right: 0;
+      top: auto;
   }
 }
