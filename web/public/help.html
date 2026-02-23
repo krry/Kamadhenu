@@ -15,43 +15,77 @@
   <main>
     <div class="oracle-wrapper">
       <div class="fortune-container">
-        <pre class="cowsay" style="color:#e6db74; text-shadow:none;">KAMADHENU WEB HELP
-===================
+        <pre class="cowsay" style="color:#e6db74; text-shadow:none;">NAME
+  kamadhenu — sacred oracle of random wisdom and cattle
 
-$&gt; kamadhenu
-  Pull a fresh random fortune + random cow.
+SYNOPSIS
+  kamadhenu [OPTION] [TEXT]
 
-$&gt; kamadhenu alias
-  Put your own words in Kamadhenu's mouth.
+DESCRIPTION
+  Kamadhenu pulls from a vast library of fortune cookies and ASCII
+  art cattle, combining them into a stream-of-consciousness oracle.
+  
+  Think of it as your personal chaos generator for those moments
+  when you need wisdom, humor, or just something to break the
+  tension.
 
-$&gt; kama help
-  You're here.
+INSTALLATION
+  macOS:
+    brew install krry/brews/kamadhenu
+  
+  Linux/Unix:
+    curl -fsSL https://raw.githubusercontent.com/krry/Kamadhenu/main/install.sh | bash
 
-$&gt; kama source
-  Open GitHub source.
+  Or download directly from:
+    https://github.com/krry/Kamadhenu/releases
+
+COMMANDS
+  kamadhenu
+    Pull a random fortune + random cow. Hit your shell with chaos.
+
+  kamadhenu help
+    Display this help text.
+
+  kamadhenu [TEXT]
+    Put your own words in Kamadhenu's mouth.
+    Example: kamadhenu "Do you love me?"
+
+  kamadhenu [YEAR]
+    Pull fortunes from a specific year (if data exists).
+    Example: kamadhenu 1979
 
 WEB FEATURES
-------------
-- Rainbow output (lolcat energy)
-- Tap or click anywhere on the oracle to refresh
-- Swipe horizontally to refresh (mobile)
-- Press Enter or Space for a new fortune
+  • Rainbow output (each line gets a fresh color)
+  • Click anywhere to refresh
+  • Swipe horizontally to refresh (mobile)
+  • Press Enter/Space for a new fortune
+  • Type your own message with "kamadhenu alias"
 
-CLI FEATURES (desktop script)
------------------------------
-Kamadhenu
-Kamadhenu help
-Kamadhenu 2021
-Kamadhenu "Do you love me?"
+TIPS
+  • Add to your ~/.bashrc or ~/.zshrc for daily chaos:
+    alias fortune='kamadhenu'
+  
+  • Pipe into other tools:
+    kamadhenu | less
+  
+  • Perfect for shell startup messages and commit inspiration
 
-Tip: add Kamadhenu to shell startup for daily chaos.
-</pre>
+WEB vs CLI
+  Web version: Instant browser access, rainbow colors, no install
+  CLI tool:   Full shell integration, scriptable, portable
+
+ABOUT
+  Built with love and fortune cookies.
+  Source: https://github.com/krry/Kamadhenu
+
+SEE ALSO
+  fortune(1), cowsay(1), lolcat(1)</pre>
       </div>
 
       <footer>
         <nav class="console-nav" aria-label="Kamadhenu commands">
           <a href="index.html" class="console-link">$&gt; kamadhenu</a>
-          <a href="index.html" class="console-link">$&gt; kamadhenu alias</a>
+          <span class="console-link" style="cursor: default;">$&gt; kamadhenu alias</span>
           <a href="help.html" class="console-link">$&gt; kama help</a>
           <a href="https://github.com/krry/Kamadhenu" target="_blank" rel="noopener" class="console-link">$&gt; kama source</a>
         </nav>

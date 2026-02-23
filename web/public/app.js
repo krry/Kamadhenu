@@ -147,12 +147,6 @@ newFortuneBtn.addEventListener('click', (e) => {
   displayFortune();
 });
 
-const aliasBtn = document.getElementById('kama-alias');
-aliasBtn.addEventListener('click', (e) => {
-  e.preventDefault();
-  displayAliasFortune();
-});
-
 // Tap on oracle to refresh (click handles taps)
 const oracleWrapper = document.querySelector('.oracle-wrapper');
 oracleWrapper.addEventListener('click', (e) => {
