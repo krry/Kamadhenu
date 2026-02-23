@@ -59,14 +59,11 @@ main {
   padding: 0;
   margin: 0;
   overflow-x: auto;
-  overflow-y: hidden;
   -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-  flex: 0 1 auto;
+  flex: 1;
   min-height: 500px; /* Reserve space to prevent layout shift */
   cursor: pointer; /* Suggest tappable */
-  touch-action: pan-x pan-y; /* Allow scrolling */
-  width: 100%;
-  max-width: 100%;
+  touch-action: pan-y; /* Allow vertical scrolling but capture horizontal swipes for logic */
 }
 
 .cowsay {
@@ -77,10 +74,8 @@ main {
   font-family: 'Recursive', 'SF Mono', 'Monaco', 'Inconsolata', monospace;
   font-variation-settings: 'MONO' 1, 'CASL' 0, 'wght' 400, 'slnt' 0, 'CRSV' 0;
   text-shadow: 0 0 8px rgba(166, 226, 46, 0.3);
-  display: inline-block;
+  display: block;
   text-align: left;
-  min-width: 100%;
-  width: auto;
   padding: 0;
   margin: 0;
 }
@@ -167,8 +162,8 @@ footer {
   }
   
   .fortune-container {
+    flex: 1;
     min-height: auto;
-    max-width: 100%;
   }
 }
 
@@ -183,27 +178,21 @@ footer {
     min-height: auto;
   }
 
+  .oracle-wrapper {
+    width: 100%;
+  }
+
   .fortune-container {
     overflow-x: auto;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
-    max-height: 60vh;
-    width: 100vw;
-    margin-left: -0.5rem;
-    margin-right: -0.5rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    height: 60vh;
+    width: calc(100vw - 1rem);
   }
 
   .cowsay {
     font-size: 13px;
     line-height: 1.25;
-    white-space: pre;
-    display: inline-block;
-    width: auto;
-    min-width: fit-content;
   }
 
   h1.watermark {
