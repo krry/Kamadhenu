@@ -29,7 +29,7 @@ for platform in "${platforms[@]}"; do
     fi
     
     echo "Building for ${GOOS}/${GOARCH}..."
-    GOOS=$GOOS GOARCH=$GOARCH go build \
+    CGO_ENABLED=0 GOOS=$GOOS GOARCH=$GOARCH go build \
         -ldflags="-s -w -X main.version=${VERSION}" \
         -o "${OUTPUT_DIR}/${output_name}"
     
